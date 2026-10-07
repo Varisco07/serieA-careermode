@@ -1,0 +1,2800 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>SERIE A 26/27 — The Next Chapter</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --fg: #f5f5f5;
+            --gr: #0b1a10;
+            --gf: #1b1d1c;
+            --lime: #c6ff3d;
+            --ac: var(--lime);
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme=light]) {
+                --bg: #050505;
+                --fg: #f5f5f5
+            }
+        }
+
+        :root[data-theme=dark] {
+            --bg: #050505;
+            --fg: #f5f5f5
+        }
+
+        html {
+            scroll-behavior: smooth;
+            height: auto;
+            scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px)
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font: 16px/1.5 "Helvetica Neue", Arial, sans-serif;
+            overflow-x: hidden
+        }
+
+        .cond {
+            font-family: "Arial Narrow", "Franklin Gothic Medium", Impact, sans-serif;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            text-transform: uppercase
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        select {
+            font: inherit;
+            color: inherit;
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--lime);
+            outline-offset: 3px
+        }
+
+        nav {
+            position: fixed;
+            top: env(safe-area-inset-top, 0px);
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 4vw;
+            transition: .4s
+        }
+
+        nav.s {
+            background: rgba(5, 5, 5, .7);
+            backdrop-filter: blur(14px);
+            padding: 10px 4vw;
+            border-bottom: 1px solid #fff1
+        }
+
+        body.builder-open #nav {
+            display: none;
+        }
+
+        nav b {
+            letter-spacing: .2em;
+            font-size: 14px
+        }
+
+        nav .l {
+            display: flex;
+            gap: 26px;
+            font-size: 12px;
+            letter-spacing: .18em;
+            align-items: center
+        }
+
+        nav .l a:hover {
+            color: var(--lime)
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid #fff5;
+            border-radius: 99px;
+            background: #0006;
+            font-size: 12px;
+            letter-spacing: .2em;
+            font-weight: 700;
+            transition: background .3s, color .3s
+        }
+
+        .btn:hover,
+        .btn.p {
+            background: var(--lime);
+            color: #000;
+            border-color: var(--lime)
+        }
+
+        #bg {
+            display: none;
+            background: none;
+            border: 0;
+            font-size: 26px
+        }
+
+        section {
+            position: relative;
+            padding: 14vh 4vw
+        }
+
+        #hero {
+            height: 100vh;
+            min-height: 620px;
+            padding: 0;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            text-align: center
+        }
+
+        .L {
+            position: absolute;
+            inset: -6%;
+            will-change: transform
+        }
+
+        .sky {
+            background: radial-gradient(ellipse at 50% 100%, #12351f, transparent 60%), linear-gradient(#050505, #08110b 70%)
+        }
+
+        .beam {
+            background: conic-gradient(from 200deg at 15% -10%, transparent 0 8%, #fff2 10%, transparent 14%), conic-gradient(from 150deg at 85% -10%, transparent 0 8%, #fff2 10%, transparent 14%);
+            animation: fl 5s infinite alternate
+        }
+
+        @keyframes fl {
+            to {
+                opacity: .55
+            }
+        }
+
+        .crowd {
+            top: 40%;
+            background: radial-gradient(circle, #ffffff55 1px, transparent 1.6px) 0 0/9px 9px, linear-gradient(#0000, #000a);
+            mask: linear-gradient(#000, #0000 90%);
+            animation: tw 3s infinite alternate
+        }
+
+        @keyframes tw {
+            to {
+                filter: brightness(1.6)
+            }
+        }
+
+        .pitch {
+            top: 62%;
+            transform: perspective(500px) rotateX(58deg);
+            transform-origin: top;
+            background: repeating-linear-gradient(90deg, #0f3a1f 0 8%, #0b2e19 8% 16%);
+            border: 2px solid #ffffff44
+        }
+
+        #grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 60;
+            opacity: .08;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        #pc {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .hc {
+            position: relative;
+            z-index: 2
+        }
+
+        .hc h1 {
+            font-size: clamp(70px, 16vw, 260px);
+            line-height: .85
+        }
+
+        .hc h2 {
+            font-size: clamp(90px, 22vw, 380px);
+            line-height: .8;
+            background: linear-gradient(#fff, #777);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent
+        }
+
+        .hc .t {
+            letter-spacing: .6em;
+            font-size: clamp(11px, 1.6vw, 20px);
+            margin: 20px 0 34px;
+            color: var(--lime)
+        }
+
+        .hc .bs {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .ko {
+            position: absolute;
+            bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+            left: 0;
+            right: 0;
+            z-index: 2;
+            font-size: 11px;
+            letter-spacing: .4em;
+            color: #fff9
+        }
+
+        .in {
+            overflow: hidden
+        }
+
+        .cur {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--lime);
+            position: fixed;
+            z-index: 99;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            transition: width .2s, height .2s;
+            display: none
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 1s cubic-bezier(.2, .7, .2, 1)
+        }
+
+        .rv.on {
+            opacity: 1;
+            transform: none
+        }
+
+        .w {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(60%);
+            filter: blur(8px);
+            transition: .9s cubic-bezier(.2, .7, .2, 1)
+        }
+
+        .on .w {
+            opacity: 1;
+            transform: none;
+            filter: none
+        }
+
+        .big {
+            font-size: clamp(48px, 11vw, 190px);
+            line-height: .88
+        }
+
+        .lab {
+            font-size: 12px;
+            letter-spacing: .4em;
+            color: var(--lime);
+            margin-bottom: 24px
+        }
+
+        .num {
+            font-size: clamp(60px, 10vw, 150px);
+            color: var(--lime);
+            line-height: 1
+        }
+
+        .ig {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6vw;
+            margin-top: 8vh;
+            align-items: center
+        }
+
+        .ig p {
+            color: #bbb;
+            max-width: 520px;
+            font-size: 18px
+        }
+
+        .pic {
+            aspect-ratio: 4/3;
+            border-radius: 6px;
+            background: radial-gradient(circle at 30% 30%, #2c6b3f, transparent 50%), linear-gradient(135deg, #0b1a10, #111);
+            position: relative;
+            overflow: hidden
+        }
+
+        .pic:after {
+            content: "26/27";
+            position: absolute;
+            right: 6%;
+            bottom: 0;
+            font: 900 clamp(60px, 12vw, 200px)/1 Impact, sans-serif;
+            color: #ffffff12
+        }
+
+        /* squadre */
+        #teams {
+            background: var(--gr);
+            transition: background .6s;
+            padding-left: 0;
+            padding-right: 0
+        }
+
+        #teams>.lab,
+        #teams>h2 {
+            padding: 0 4vw
+        }
+
+        .tr {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 30px 4vw;
+            height: 74vh;
+            min-height: 520px
+        }
+
+        .tp {
+            flex: 0 0 120px;
+            scroll-snap-align: center;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(#000a, #000d), var(--c1);
+            transition: flex-basis .6s cubic-bezier(.2, .7, .2, 1);
+            cursor: pointer;
+            border: 1px solid #fff1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end
+        }
+
+        .tp:hover,
+        .tp:focus-visible,
+        .tp.o {
+            flex-basis: 440px
+        }
+
+        .tp:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 30%, var(--c1), transparent 70%);
+            opacity: .35;
+            transition: .5s
+        }
+
+        .tp:hover:before {
+            opacity: .9
+        }
+
+        .tp .sh {
+            position: absolute;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 76px;
+            height: 88px;
+            clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
+            background: linear-gradient(135deg, var(--c1), var(--c2));
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+            transition: .6s
+        }
+
+        .tp:hover .sh {
+            transform: translateX(-50%) scale(1.5) rotate(-6deg)
+        }
+
+        .tp * {
+            position: relative
+        }
+
+        .tp h3 {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            font-size: 34px;
+            white-space: nowrap;
+            transition: .4s;
+            align-self: flex-start
+        }
+
+        .tp:hover h3 {
+            writing-mode: horizontal-tb;
+            transform: none;
+            font-size: 46px
+        }
+
+        .tp .x {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: .5s;
+            font-size: 13px;
+            color: #ddd;
+            white-space: nowrap
+        }
+
+        .tp:hover .x {
+            max-height: 200px;
+            opacity: 1
+        }
+
+        /* big matches */
+        .tl {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 30px 0
+        }
+
+        .bm {
+            flex: 0 0 min(420px, 82vw);
+            scroll-snap-align: start;
+            padding: 28px;
+            border: 1px solid #fff2;
+            border-radius: 10px;
+            background: linear-gradient(160deg, #111, #050505);
+            position: relative
+        }
+
+        .bm:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: -31px;
+            height: 1px;
+            background: #fff3
+        }
+
+        .bm:after {
+            content: "";
+            position: absolute;
+            top: -35px;
+            left: 28px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--lime);
+            box-shadow: 0 0 14px var(--lime)
+        }
+
+        .vs {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 44px;
+            margin: 14px 0
+        }
+
+        .cd {
+            font: 900 30px "Arial Narrow", Impact, sans-serif;
+            color: var(--lime)
+        }
+
+        .bm small {
+            color: #999;
+            display: block
+        }
+
+        /* calendario */
+        .chips {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 10px 0
+        }
+
+        .chips button {
+            flex: 0 0 auto;
+            min-width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid #fff3;
+            background: 0
+        }
+
+        .chips button.on {
+            background: var(--lime);
+            color: #000
+        }
+
+        .bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 10px 0
+        }
+
+        select {
+            background: #111;
+            border: 1px solid #fff3;
+            padding: 10px;
+            border-radius: 8px
+        }
+
+        .mr {
+            display: grid;
+            grid-template-columns: 1fr 90px 1fr;
+            align-items: center;
+            gap: 10px;
+            padding: 16px;
+            border-bottom: 1px solid #fff1;
+            cursor: pointer;
+            transition: background .3s
+        }
+
+        .mr:hover {
+            background: #ffffff0a
+        }
+
+        .mr b:first-child {
+            text-align: right
+        }
+
+        .mr .sc {
+            text-align: center;
+            font-size: 26px
+        }
+
+        .mr small {
+            display: block;
+            color: #888;
+            font-weight: 400
+        }
+
+        #cal #ml {
+            animation: fi .5s
+        }
+
+        @keyframes fi {
+            from {
+                opacity: 0;
+                transform: translateX(30px)
+            }
+        }
+
+        /* classifica */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px
+        }
+
+        th {
+            font-size: 11px;
+            letter-spacing: .2em;
+            color: #888;
+            text-align: right;
+            padding: 8px
+        }
+
+        td {
+            padding: 11px 8px;
+            text-align: right;
+            border-bottom: 1px solid #fff1
+        }
+
+        td:nth-child(2),
+        th:nth-child(2) {
+            text-align: left
+        }
+
+        tr {
+            transition: background .3s
+        }
+
+        tr:hover {
+            background: #ffffff0a
+        }
+
+        td:first-child {
+            border-left: 4px solid var(--z, transparent);
+            text-align: left
+        }
+
+        .tw {
+            overflow-x: auto
+        }
+
+        td.pt {
+            font-weight: 900;
+            color: var(--lime);
+            font-size: 18px
+        }
+
+        .lg {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 14px
+        }
+
+        .lg i {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin-right: 6px
+        }
+
+        /* match center */
+        #mc {
+            background: linear-gradient(#050505, #0b1a10 50%, #050505);
+            text-align: center
+        }
+
+        .mh {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4vw;
+            font-size: clamp(28px, 6vw, 90px)
+        }
+
+        .mh .num {
+            font-size: clamp(70px, 14vw, 220px)
+        }
+
+        .st {
+            max-width: 760px;
+            margin: 40px auto;
+            text-align: left
+        }
+
+        .sr {
+            margin: 14px 0
+        }
+
+        .sr div {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            letter-spacing: .15em
+        }
+
+        .sb {
+            display: flex;
+            height: 8px;
+            gap: 3px;
+            margin-top: 6px
+        }
+
+        .sb i {
+            display: block;
+            height: 100%;
+            background: var(--lime);
+            width: 0;
+            transition: 1.4s cubic-bezier(.2, .7, .2, 1);
+            border-radius: 4px
+        }
+
+        .sb i:last-child {
+            background: #555;
+            margin-left: auto
+        }
+
+        /* stadi */
+        .sl {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 16px
+        }
+
+        .sd {
+            flex: 0 0 min(86vw, 900px);
+            height: 62vh;
+            min-height: 420px;
+            scroll-snap-align: center;
+            border-radius: 10px;
+            padding: 5vh 4vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden
+        }
+
+        .sd:before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 50% 0, #ffffff30, transparent 50%), linear-gradient(#0000, #000c)
+        }
+
+        .sd * {
+            position: relative
+        }
+
+        .sd h3 {
+            font-size: clamp(34px, 6vw, 80px);
+            line-height: .9
+        }
+
+        .sd p {
+            color: #ccc;
+            max-width: 480px;
+            margin-top: 10px
+        }
+
+        .sd .k {
+            display: flex;
+            gap: 30px;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--lime);
+            flex-wrap: wrap
+        }
+
+        /* stats */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 20px 0
+        }
+
+        .tabs button {
+            padding: 10px 18px;
+            border-radius: 99px;
+            border: 1px solid #fff3;
+            background: 0
+        }
+
+        .tabs .on {
+            background: var(--lime);
+            color: #000
+        }
+
+        .br {
+            display: grid;
+            grid-template-columns: 130px 1fr 50px;
+            gap: 12px;
+            align-items: center;
+            margin: 9px 0;
+            font-size: 14px
+        }
+
+        .br i {
+            display: block;
+            height: 14px;
+            background: linear-gradient(90deg, #3a6b1f, var(--lime));
+            width: 0;
+            transition: 1.2s cubic-bezier(.2, .7, .2, 1);
+            border-radius: 3px
+        }
+
+        /* editoriale */
+        .ed {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px
+        }
+
+        .ec {
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+            transition: transform .5s
+        }
+
+        .ec:hover {
+            transform: translateY(-8px) scale(1.01)
+        }
+
+        .ec:before {
+            content: attr(data-n);
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font: 900 150px/1 Impact, sans-serif;
+            color: #ffffff14
+        }
+
+        .ec span {
+            font-size: 11px;
+            letter-spacing: .3em;
+            color: var(--lime)
+        }
+
+        .ec h3 {
+            font-size: 34px;
+            line-height: .95;
+            margin-top: 8px
+        }
+
+        footer {
+            padding: 14vh 4vw 6vh;
+            border-top: 1px solid #fff2;
+            background: #000
+        }
+
+        footer .big {
+            font-size: clamp(70px, 20vw, 340px)
+        }
+
+        footer nav2 {
+            display: flex
+        }
+
+        .fl {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            font-size: 13px;
+            letter-spacing: .2em
+        }
+
+        .fl a:hover {
+            color: var(--lime)
+        }
+
+        footer small {
+            color: #777;
+            display: block;
+            max-width: 760px
+        }
+
+        /* bet */
+        .bw {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 24px;
+            align-items: start;
+            margin-top: 20px
+        }
+
+        .ev {
+            padding: 16px;
+            border-bottom: 1px solid #fff1
+        }
+
+        .ev>div:first-child {
+            display: flex;
+            justify-content: space--between;
+            margin-bottom: 10px;
+            font-size: 18px
+        }
+
+        .ev small {
+            color: #888;
+            font-weight: 400;
+            font-size: 12px
+        }
+
+        .og {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 6px
+        }
+
+        .od {
+            padding: 8px 2px;
+            border-radius: 8px;
+            border: 1px solid #fff3;
+            background: #ffffff08;
+            font-size: 13px;
+            transition: .2s
+        }
+
+        .od b {
+            display: block;
+            font-size: 10px;
+            color: #888;
+            letter-spacing: .15em
+        }
+
+        .od:hover {
+            border-color: var(--lime)
+        }
+
+        .od.on {
+            background: var(--lime);
+            color: #000
+        }
+
+        .od.on b {
+            color: #000
+        }
+
+        .slip {
+            position: sticky;
+            top: 90px;
+            padding: 20px;
+            border: 1px solid #fff2;
+            border-radius: 12px;
+            background: #0c0f0d
+        }
+
+        .slip input {
+            width: 90px;
+            background: #111;
+            border: 1px solid #fff3;
+            color: inherit;
+            padding: 8px;
+            border-radius: 8px;
+            margin-left: 8px
+        }
+
+        .sel {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid #fff1
+        }
+
+        .sel button {
+            background: 0;
+            border: 0;
+            color: #f55
+        }
+
+        .pw {
+            margin: 14px 0;
+            font-size: 14px
+        }
+
+        .pw b {
+            color: var(--lime);
+            font-size: 22px
+        }
+
+        .hb {
+            padding: 10px;
+            border: 1px solid #fff2;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-size: 12px
+        }
+
+        .hb.w {
+            border-color: #3dff9a
+        }
+
+        .hb.l {
+            border-color: #ff4d6a;
+            opacity: .7
+        }
+
+        .hb.p {
+            border-color: #ffc83d
+        }
+
+        /* FORMAZIONE BUILDER */
+        #forma,
+        #simul {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 300;
+            overflow-y: auto;
+            padding: 36px 4vw 40px
+        }
+
+        #forma.active,
+        #simul.active {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            overflow-y: auto;
+        }
+
+        .forma-content {
+            width: min(1540px, 100%);
+            margin: 0 auto;
+        }
+
+        .forma-content > .forma-header {
+            margin-bottom: 18px;
+        }
+
+        .formation-layout {
+            display: grid;
+            grid-template-columns: minmax(220px, .78fr) minmax(390px, 1.5fr) minmax(270px, .95fr);
+            align-items: stretch;
+            gap: 18px;
+            min-height: min(780px, calc(100vh - 118px));
+        }
+
+        .formation-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            min-width: 0;
+            padding: 20px;
+            border: 1px solid #ffffff1c;
+            background: #0b0d0b;
+        }
+
+        .formation-controls .lab {
+            margin-bottom: 8px;
+        }
+
+        .pitch-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .pitch-actions {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .forma-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 28px
+        }
+
+        .forma-header h1 {
+            font-size: clamp(32px, 5vw, 56px);
+            line-height: .95;
+            margin-bottom: 12px;
+        }
+
+        .forma-header p {
+            color: #9da79f;
+            font-size: 14px;
+        }
+
+        .forma-close {
+            background: none;
+            border: none;
+            font-size: 32px;
+            color: var(--lime);
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px
+        }
+
+        .team-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            flex-wrap: wrap;
+        }
+
+        .moduli {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 12px;
+            padding: 5px;
+            border: 1px solid #ffffff24;
+            border-radius: 7px;
+            background: #0c110e;
+        }
+
+        .mod-btn {
+            min-width: 66px;
+            padding: 9px 12px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: transparent;
+            color: #c1c9c3;
+            font-size: 12px;
+            font-weight: 800;
+            transition: background .2s, color .2s, border-color .2s;
+        }
+
+        .mod-btn:hover,
+        .mod-btn.active {
+            border-color: var(--lime);
+            background: var(--lime);
+            color: #000;
+        }
+
+        .formation-label {
+            display: inline-flex;
+            align-items: center;
+            min-height: 38px;
+            padding: 0 12px;
+            border: 1px solid #c6ff3d55;
+            border-radius: 6px;
+            color: var(--lime);
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: .08em;
+        }
+
+        .pitch-builder {
+            background: repeating-linear-gradient(0deg, #123b25 0 12.5%, #10351f 12.5% 25%);
+            border: 1px solid #ffffff38;
+            border-radius: 10px;
+            padding: clamp(12px, 1.6vw, 24px);
+            margin: 0 auto 14px;
+            aspect-ratio: 4 / 5;
+            display: grid;
+            position: relative;
+            width: min(100%, 590px);
+            height: min(75vh, 740px);
+            max-height: none;
+            box-shadow: 0 24px 80px #0008;
+        }
+
+        .pitch-builder:before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border: 1px solid #ffffff38;
+            border-radius: 10px;
+            background:
+                linear-gradient(90deg, transparent 48%, #fff2 48%, #fff2 52%, transparent 52%) center/100% 2px no-repeat,
+                linear-gradient(0deg, transparent 30%, #fff2 30%, #fff2 32%, transparent 32%) center/2px 100% no-repeat,
+                linear-gradient(0deg, transparent 35%, #fff2 35%, #fff2 65%, transparent 65%) 0 0/2px 100% no-repeat,
+                linear-gradient(0deg, transparent 35%, #fff2 35%, #fff2 65%, transparent 65%) 100% 0/2px 100% no-repeat;
+            pointer-events: none
+        }
+
+        .pitch-grid {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 10px;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .pitch-row {
+            display: flex;
+            justify-content: space-around;
+            gap: 8px;
+            min-height: 68px;
+        }
+
+        .pitch-slot {
+            flex: 1 1 0;
+            max-width: 128px;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #09180fcc;
+            border: 1px dashed #ffffff70;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: .3s;
+            min-height: 64px;
+            position: relative;
+            text-align: center
+        }
+
+        .pitch-slot:hover:not(.filled) {
+            border: 1px solid var(--lime);
+            background: #173a26;
+        }
+
+        .pitch-slot.filled {
+            background: linear-gradient(145deg, color-mix(in srgb, var(--pc) 42%, #0b170f), #09180fcc 78%);
+            border: 1px solid color-mix(in srgb, var(--pc) 75%, white 8%);
+            cursor: default;
+        }
+
+        .pitch-slot.filled .player-mini {
+            font-size: 11px;
+            color: #fff
+        }
+
+        .slot-shirt {
+            display: grid;
+            place-items: center;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 6px;
+            border: 1px solid #ffffff85;
+            border-radius: 6px 6px 10px 10px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 900;
+            background: color-mix(in srgb, var(--pc) 80%, #111);
+        }
+
+        .slot-club {
+            max-width: 100%;
+            color: #d5ddd7;
+            font-size: 9px;
+            line-height: 1.1;
+        }
+
+        .slot-overall {
+            color: var(--lime);
+            font-size: 10px;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .slot-plus {
+            color: var(--lime);
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .slot-remove {
+            position: absolute;
+            top: 3px;
+            right: 4px;
+            display: grid;
+            place-items: center;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            border: 0;
+            border-radius: 50%;
+            background: #0008;
+            color: #fff;
+            font-size: 16px;
+            line-height: 1;
+            opacity: .65;
+        }
+
+        .slot-remove:hover {
+            opacity: 1;
+            background: #b92e3d;
+        }
+
+        .pitch-slot .role {
+            font-size: 11px;
+            color: #888;
+            letter-spacing: .15em;
+            margin-top: 4px
+        }
+
+        .player-mini {
+            font-weight: 900;
+            color: var(--lime);
+            font-size: 14px;
+            line-height: 1
+        }
+
+        .player-mini .num {
+            font-size: 18px
+        }
+
+        .player-modal {
+            display: flex;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        .player-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: none;
+            height: min(75vh, 740px);
+            padding: 18px;
+            background: #0b0d0b;
+            border: 1px solid #ffffff1c;
+            border-radius: 0;
+            overflow: hidden;
+        }
+
+        .player-modal .forma-header {
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .player-modal:not(.active) .forma-header,
+        .player-modal:not(.active) .player-grid {
+            display: none;
+        }
+
+        .picker-empty {
+            display: none;
+            margin: auto;
+            max-width: 230px;
+            color: #919a92;
+            font-size: 14px;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .player-modal:not(.active) .picker-empty {
+            display: block;
+        }
+
+        .player-list {
+            width: 100%;
+            min-height: 0;
+        }
+
+        .player-list .forma-header>div {
+            min-width: 0;
+            flex: 1 1 auto;
+        }
+
+        .player-list .forma-header h2 {
+            font-size: 28px;
+            line-height: .95;
+        }
+
+        .picker-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .player-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+            padding: 2px 4px 2px 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+        }
+
+        .player-card {
+            display: grid;
+            grid-template-columns: 40px minmax(0, 1fr) auto;
+            grid-template-rows: auto auto;
+            align-items: center;
+            gap: 3px 12px;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border: 1px solid #fff2;
+            border-radius: 8px;
+            min-height: 68px;
+            padding: 10px 12px;
+            cursor: pointer;
+            transition: .3s;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card:not(.unavailable):hover {
+            background: linear-gradient(135deg, var(--pc), #0d0d0d);
+            border-color: var(--pc);
+            transform: translateY(-4px)
+        }
+
+        .player-card.unavailable {
+            cursor: not-allowed;
+            filter: saturate(.45);
+        }
+
+        .draft-cross {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            border-radius: inherit;
+            background: #080a09b8;
+            color: #ff6872;
+            font-size: 58px;
+            font-weight: 500;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .player-card .flag {
+            display: grid;
+            grid-column: 1;
+            grid-row: 1 / span 2;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            margin: 0;
+            border-radius: 7px 7px 12px 12px;
+            background: color-mix(in srgb, var(--pc) 80%, #111);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .player-card .name {
+            grid-column: 2;
+            grid-row: 1;
+            min-width: 0;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.15;
+            overflow-wrap: anywhere;
+            margin: 0;
+        }
+
+        .player-card .ovr {
+            display: grid;
+            grid-column: 3;
+            grid-row: 1 / span 2;
+            place-items: center;
+            min-width: 40px;
+            background: color-mix(in srgb, var(--pc) 75%, white 25%);
+            color: #000;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 900
+        }
+
+        .player-card .club {
+            grid-column: 2;
+            grid-row: 2;
+            font-size: 11px;
+            color: #888;
+            line-height: 1.1;
+            margin: 0
+        }
+
+        .forma-btn {
+            padding: 14px 28px;
+            border: 1px solid #fff3;
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: .3s;
+            margin-top: 20px
+        }
+
+        .forma-btn:hover:not(:disabled) {
+            background: var(--lime);
+            color: #000;
+            border-color: var(--lime)
+        }
+
+        .forma-btn:disabled {
+            opacity: .5;
+            cursor: not-allowed
+        }
+
+        .skip-counter {
+            font-size: 12px;
+            color: #888;
+            margin-left: 12px
+        }
+
+        .forma-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            max-width: 680px;
+            margin: 14px auto 0;
+            color: #dce4dd;
+            font-size: 12px;
+            letter-spacing: .12em;
+            font-weight: 800;
+        }
+
+        .forma-info b {
+            color: var(--lime);
+        }
+
+        .lineup-count {
+            color: #9da79f;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .forma-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .shuffle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            min-height: 44px;
+            padding: 0 16px;
+            border: 1px solid #ffffff35;
+            border-radius: 6px;
+            background: #111713;
+            color: #e5ece7;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            transition: border-color .2s, background .2s, color .2s;
+        }
+
+        .shuffle-btn:hover {
+            border-color: var(--lime);
+            background: #172318;
+            color: var(--lime);
+        }
+
+        .shuffle-btn:disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .shuffle-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .lineup-display {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin: 40px 0
+        }
+
+        .lineup-player {
+            background: linear-gradient(135deg, var(--pc), #0d0d0d);
+            border: 1px solid var(--pc);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center
+        }
+
+        .lineup-player .name {
+            font-size: 16px;
+            font-weight: 900;
+            color: #fff
+        }
+
+        .lineup-player .club {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 4px
+        }
+
+        .lineup-player .ovr {
+            display: inline-block;
+            background: #fff;
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 900;
+            margin-top: 8px
+        }
+
+        #simul {
+            text-align: center
+        }
+
+        .simul-content {
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        .round-results {
+            margin: 40px 0
+        }
+
+        .match-sim {
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            border: 1px solid #fff2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 12px 0;
+            display: grid;
+            grid-template-columns: 1fr 100px 1fr;
+            gap: 16px;
+            align-items: center
+        }
+
+        .match-sim .team {
+            text-align: right
+        }
+
+        .match-sim .team:nth-child(3) {
+            text-align: left
+        }
+
+        .match-sim .team b {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 4px
+        }
+
+        .match-sim .team small {
+            color: #888;
+            font-size: 12px
+        }
+
+        .match-sim .score {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--lime)
+        }
+
+        .standings-final {
+            margin: 40px 0
+        }
+
+        .standings-final table {
+            width: 100%
+        }
+
+        .standings-final th,
+        .standings-final td {
+            padding: 12px;
+            text-align: left
+        }
+
+        .standings-final th {
+            color: #888;
+            font-size: 12px;
+            letter-spacing: .2em
+        }
+
+        .standings-final td {
+            border-bottom: 1px solid #fff1
+        }
+
+        .standings-final tr:hover {
+            background: #ffffff0a
+        }
+
+        .standings-final tr.user-standing {
+            background: #c6ff3d1a;
+            color: var(--lime);
+            font-weight: 800
+        }
+
+        .season-summary {
+            padding: 24px;
+            border-left: 4px solid var(--lime);
+            background: #ffffff08;
+            text-align: left
+        }
+
+        .season-summary strong {
+            display: block;
+            color: var(--lime);
+            font-size: clamp(28px, 6vw, 48px);
+            line-height: 1.1
+        }
+
+        .season-summary span {
+            display: block;
+            margin-top: 8px;
+            color: #bbb
+        }
+
+        .simul-btn {
+            padding: 16px 40px;
+            background: var(--lime);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: .3s
+        }
+
+        .simul-btn:hover {
+            transform: scale(1.05)
+        }
+
+        .simul-loading {
+            font-size: 24px;
+            color: var(--lime);
+            margin: 60px 0;
+            animation: pulse 1.5s infinite
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .5
+            }
+        }
+
+        @media(max-width:900px) {
+            .bw {
+                grid-template-columns: 1fr
+            }
+
+            .slip {
+                position: static
+            }
+
+            .og {
+                grid-template-columns: repeat(4, 1fr)
+            }
+
+            .ig {
+                grid-template-columns: 1fr
+            }
+
+            .ed {
+                grid-template-columns: 85% 85% 85%;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory
+            }
+
+            .ec {
+                scroll-snap-align: center
+            }
+
+            .tp {
+                flex-basis: 78vw
+            }
+
+            .tp h3 {
+                writing-mode: horizontal-tb;
+                transform: none
+            }
+
+            .tp .x {
+                max-height: 200px;
+                opacity: 1
+            }
+
+            .br {
+                grid-template-columns: 90px 1fr 40px
+            }
+
+            .mr {
+                grid-template-columns: 1fr 64px 1fr;
+                font-size: 13px
+            }
+
+            .cur {
+                display: none !important
+            }
+
+            .formation-layout {
+                grid-template-columns: minmax(210px, .75fr) minmax(0, 1.4fr);
+                min-height: 0;
+            }
+
+            .player-modal {
+                grid-column: 1 / -1;
+            }
+
+            .player-list {
+                height: 340px;
+            }
+
+            .player-grid {
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            }
+
+            .pitch-builder {
+                aspect-ratio: 4/5;
+                width: 100%;
+                height: min(72vh, 680px);
+                max-height: none;
+            }
+
+            #forma,
+            #simul {
+                padding: 60px 3vw 40px
+            }
+        }
+
+        @media(max-width:480px) {
+            .formation-layout {
+                grid-template-columns: minmax(0, 1fr);
+                gap: 12px;
+            }
+
+            .formation-controls {
+                padding: 14px;
+            }
+
+            .pitch-column {
+                grid-row: 2;
+            }
+
+            .pitch-builder {
+                width: min(100%, 420px);
+                height: auto;
+                aspect-ratio: 4 / 5;
+                padding: 10px;
+            }
+
+            .player-modal {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .player-list {
+                height: min(58vh, 460px);
+                padding: 14px;
+            }
+
+            .player-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .player-list .forma-header {
+                gap: 8px;
+            }
+
+            .player-list .forma-header h2 {
+                font-size: 22px;
+                overflow-wrap: anywhere;
+            }
+
+            .picker-actions {
+                gap: 4px;
+                flex-shrink: 0;
+            }
+
+            .team-control {
+                align-items: stretch;
+            }
+
+            .moduli {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                flex-wrap: initial;
+            }
+
+            .mod-btn {
+                min-width: 0;
+                width: 100%;
+                padding: 9px 2px;
+                font-size: 10px;
+            }
+        }
+
+        @media(pointer:fine) {
+            .cur {
+                display: block
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+
+            .rv,
+            .w {
+                opacity: 1;
+                transform: none;
+                filter: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="grain"></div>
+    <div class="cur" id="cur"></div>
+    <nav id="nav"><a href="#hero"><b class="cond">SERIE A 26/27</b></a>
+        <div class="l"><a href="#intro">CAMPIONATO</a><a href="#teams">SQUADRE</a><a href="#cal">CALENDARIO</a><a
+                href="#tab">CLASSIFICA</a><a href="#stadi">STADI</a><a href="#stats">STATISTICHE</a><a
+                href="#bet">SCOMMESSE</a><a class="btn p mg" href="#mc">MATCH CENTER</a><a class="btn p mg"
+                href="#forma" id="forma-link">CREA SQUADRA</a><a class="btn p mg" href="carriera.html">CARRIERA GIOCATORE</a></div>
+        <button id="bg" aria-label="Menu">☰</button>
+    </nav>
+
+    <header id="hero">
+        <div class="L sky" data-p=".1"></div>
+        <div class="L beam" data-p=".15"></div>
+        <div class="L crowd" data-p=".25"></div>
+        <div class="L pitch" data-p=".4"></div><canvas id="pc"></canvas>
+        <div class="hc" data-p="-.15">
+            <h1 class="cond">Serie A</h1>
+            <h2 class="cond">26 / 27</h2>
+            <div class="t">THE NEXT CHAPTER</div>
+            <div class="bs"><a class="btn p mag" href="#intro">SCOPRI IL CAMPIONATO →</a><a class="btn mag"
+                    href="#teams">LE SQUADRE</a><button class="btn mag" id="enter">ENTER THE SEASON</button></div>
+        </div>
+        <div class="ko">KICK-OFF · AUGUST 2026</div>
+    </header>
+
+    <section id="intro">
+        <div class="lab">IL CAMPIONATO</div>
+        <h2 class="big cond rv" data-w>20 Cities.<br>20 Dreams.<br><span style="color:var(--lime)">One Title.</span>
+        </h2>
+        <div class="ig">
+            <div class="rv">
+                <p>Trentotto giornate, venti club, una sola corona. La stagione 2026/27 apre un nuovo capitolo del
+                    calcio italiano: stadi che ruggiscono, rivalità che attraversano generazioni, tattica e tecnologia
+                    che ridisegnano il gioco.</p>
+                <div style="display:flex;gap:5vw;margin-top:40px">
+                    <div>
+                        <div class="num cond" data-n="20">0</div><small>SQUADRE</small>
+                    </div>
+                    <div>
+                        <div class="num cond" data-n="38">0</div><small>GIORNATE</small>
+                    </div>
+                    <div>
+                        <div class="num cond" data-n="380">0</div><small>PARTITE</small>
+                    </div>
+                </div>
+            </div>
+            <div class="pic rv"></div>
+        </div>
+    </section>
+
+    <section id="teams">
+        <div class="lab">LE SQUADRE</div>
+        <h2 class="big cond rv" data-w>Venti Club.<br>Una Sola Corona.</h2>
+        <div class="tr" id="tr" tabindex="0" aria-label="Squadre"></div>
+    </section>
+
+    <section id="big">
+        <div class="lab">BIG MATCHES</div>
+        <h2 class="big cond rv" data-w>The Nights<br>We Wait For</h2>
+        <div class="tl" id="tl"></div>
+    </section>
+
+    <section id="cal">
+        <div class="lab">CALENDARIO</div>
+        <h2 class="big cond rv" data-w>Giornata<br>Per Giornata</h2>
+        <div class="chips" id="chips" role="tablist"></div>
+        <div class="bar"><label>Squadra <select id="tf">
+                    <option value="">Tutte</option>
+                </select></label><small id="dt" style="color:#888"></small></div>
+        <div id="ml"></div>
+    </section>
+
+    <section id="tab">
+        <div class="lab">CLASSIFICA</div>
+        <h2 class="big cond rv" data-w>La Corsa<br>Al Titolo</h2>
+        <div class="tw">
+            <table>
+                <thead>
+                    <tr>
+                        <th>POS
+                        <th>SQUADRA
+                        <th>PG
+                        <th>V
+                        <th>N
+                        <th>P
+                        <th>GF
+                        <th>GS
+                        <th>DR
+                        <th>PT
+                    </tr>
+                </thead>
+                <tbody id="tb"></tbody>
+            </table>
+        </div>
+        <div class="lg"><span><i style="background:#3dff9a"></i>Champions League</span><span><i
+                    style="background:#ff9a3d"></i>Europa League</span><span><i
+                    style="background:#3dc6ff"></i>Conference League</span><span><i
+                    style="background:#ff4d6a"></i>Retrocessione</span></div>
+    </section>
+
+    <section id="mc">
+        <div class="lab">MATCH CENTER</div>
+        <div class="mh cond" id="mh"></div>
+        <div class="st" id="st"></div>
+    </section>
+
+    <section id="stadi">
+        <div class="lab">STADI</div>
+        <h2 class="big cond rv" data-w>The Temples Of<br>Italian Football</h2>
+        <div class="sl" id="sl"></div>
+    </section>
+
+    <section id="stats">
+        <div class="lab">STATISTICHE</div>
+        <h2 class="big cond rv" data-w>Numbers<br>Don't Lie</h2>
+        <div class="tabs" id="tabs"></div>
+        <div id="bars"></div>
+    </section>
+
+    <section id="bet">
+        <div class="lab">CENTRO SCOMMESSE · SIMULATORE</div>
+        <h2 class="big cond rv" data-w>Play The<br>Matchday</h2>
+        <p style="color:#aaa;max-width:680px;margin:20px 0">Gioca schedine <b>solo con crediti virtuali</b>: nessun
+            denaro reale, nessun legame con operatori di scommesse. Le quote 1X2 della 6ª giornata derivano dalle
+            probabilità reali; gli esiti si decidono con una simulazione. Scegli, componi la multipla, poi simula. Il
+            gioco d'azzardo reale è vietato ai minori e può causare dipendenza.</p>
+        <div class="bw">
+            <div>
+                <div class="bar"><b class="cond" style="font-size:28px;color:var(--lime)" id="bk"></b><span id="bd"
+                        style="color:#aaa"></span><button class="btn p" id="sim">SIMULA GIORNATA</button><button
+                        class="btn" id="brs">RESET CREDITI</button></div>
+                <div id="bmx"></div>
+            </div>
+            <aside class="slip">
+                <h3 class="cond">LA TUA SCHEDINA</h3>
+                <div id="sl2"></div><label>Puntata €<input id="stk" type="number" min="1" value="10"></label>
+                <div class="pw" id="pw"></div><button class="btn p" id="plc">GIOCA SCHEDINA</button>
+                <h3 class="cond" style="margin-top:24px">SCHEDINE GIOCATE</h3>
+                <div id="hist"></div>
+            </aside>
+        </div>
+    </section>
+
+    <section id="ed">
+        <div class="lab">EDITORIALE</div>
+        <h2 class="big cond rv" data-w>The Stories<br>Behind The Game</h2>
+        <div class="ed" id="ed"></div>
+    </section>
+
+    <footer>
+        <div class="big cond">Serie A<br>26 / 27</div>
+        <div class="cond" style="font-size:28px;color:var(--lime)">THE NEXT CHAPTER</div>
+        <div class="fl"><a href="#intro">CAMPIONATO</a><a href="#teams">SQUADRE</a><a href="#cal">CALENDARIO</a><a
+                href="#tab">CLASSIFICA</a><a href="#mc">MATCH CENTER</a><a href="#stats">STATISTICHE</a><a
+                href="#stadi">STADI</a><a href="#bet">SCOMMESSE</a></div>
+        <div class="fl"><a href="#hero">INSTAGRAM</a><a href="#hero">X</a><a href="#hero">YOUTUBE</a><a
+                href="#hero">TIKTOK</a></div>
+        <small>© 2026 — Progetto concettuale indipendente, non ufficiale. Marchi e nomi dei club appartengono ai
+            rispettivi titolari. Classifica dopo 5 giornate, risultati della 5ª e programma della 6ª sono dati reali
+            aggiornati al 7/10/2026; le altre giornate non sono ancora caricate. Il Centro Scommesse è un simulatore con
+            crediti virtuali.</small>
+    </footer>
+
+    <!-- FORMAZIONE BUILDER -->
+    <div id="forma">
+        <div class="forma-content">
+            <div class="forma-header">
+                <div>
+                    <h1 class="cond">LA TUA FORMAZIONE</h1>
+                    <p>XI TITOLARE · STAGIONE 2026/27</p>
+                </div>
+                <button class="forma-close" id="forma-close" aria-label="Chiudi formazione">✕</button>
+            </div>
+
+            <div class="formation-layout">
+                <aside class="formation-controls" aria-label="Controlli formazione">
+                    <div class="forma-toolbar">
+                        <div>
+                            <div class="lab">SCEGLI IL MODULO</div>
+                            <div class="moduli" id="moduli" role="group" aria-label="Modulo di gioco">
+                                <button class="mod-btn" type="button" data-mod="4-3-3" aria-pressed="false">4-3-3</button>
+                                <button class="mod-btn" type="button" data-mod="3-4-3" aria-pressed="false">3-4-3</button>
+                                <button class="mod-btn" type="button" data-mod="4-2-3-1" aria-pressed="false">4-2-3-1</button>
+                                <button class="mod-btn" type="button" data-mod="3-5-2" aria-pressed="false">3-5-2</button>
+                                <button class="mod-btn" type="button" data-mod="3-4-2-1" aria-pressed="false">3-4-2-1</button>
+                                <button class="mod-btn" type="button" data-mod="3-5-1-1" aria-pressed="false">3-5-1-1</button>
+                            </div>
+                            <span class="formation-label" id="formation-label">MODULO --</span>
+                        </div>
+                    </div>
+                    <div class="forma-info" id="forma-info" style="display: none">
+                        <b id="forma-team">DRAFT CLUB</b>
+                        <span id="draft-club">SCEGLI UN MODULO</span>
+                        <span class="lineup-count" id="lineup-count">0 / 11 GIOCATORI</span>
+                    </div>
+                </aside>
+
+                <div class="pitch-column">
+                    <div class="pitch-builder" id="pitch-builder" aria-label="Campo e formazione"></div>
+                    <div class="pitch-actions">
+                        <button class="forma-btn" id="skip-btn" style="display: none">SKIP FORMAZIONE <span class="skip-counter" id="skip-counter"></span></button>
+                        <button class="forma-btn" id="play-btn" style="display: none" disabled>SIMULA IL CAMPIONATO</button>
+                    </div>
+                </div>
+
+                <aside class="player-modal" id="player-modal" aria-label="Giocatori del club">
+                    <div class="player-list">
+                        <div class="forma-header">
+                            <div>
+                                <h2 class="cond" id="modal-title">SCEGLI UN GIOCATORE</h2>
+                                <p style="color: #aaa; font-size: 14px" id="modal-role"></p>
+                            </div>
+                            <div class="picker-actions">
+                                <button class="shuffle-btn" id="next-team-btn" type="button" aria-label="Pesca un altro club" disabled title="Pesca un altro club">
+                                    <span class="shuffle-icon" aria-hidden="true">↻</span> CAMBIA CLUB <span class="skip-counter" id="club-skip-count">0/3</span>
+                                </button>
+                                <button class="forma-close" id="modal-close" aria-label="Chiudi selezione giocatore">✕</button>
+                            </div>
+                        </div>
+                        <div class="picker-empty">Scegli un modulo per iniziare. Campo e giocatori resteranno visibili insieme.</div>
+                        <div class="player-grid" id="player-grid"></div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIMULAZIONE CAMPIONATO -->
+    <div id="simul">
+        <div class="forma-header">
+            <div>
+                <h1 class="cond" style="font-size: 48px; margin-bottom: 20px">SIMULAZIONE CAMPIONATO</h1>
+                <p style="color: #aaa; font-size: 14px" id="simul-squad-info"></p>
+            </div>
+            <button class="forma-close" id="simul-close">✕</button>
+        </div>
+
+        <div class="simul-content">
+            <div id="simul-loading" class="simul-loading">Simulazione in corso...</div>
+            <div id="simul-results" style="display: none;">
+                <div id="round-results"></div>
+                <div class="standings-final" id="standings-final"></div>
+                <button class="simul-btn" id="back-btn">TORNA ALLA HOME</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="wow">
+        <div id="hb"></div>
+        <div id="wt" class="cond">90 Minutes.<br><span style="color:var(--lime)">One Dream.</span></div>
+    </div>
+
+    <script>
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+        console.log('Script loaded');
+
+        // apertura builder squadra
+        const formaLink = $('#forma-link');
+        if (formaLink) {
+            formaLink.addEventListener('click', e => {
+                e.preventDefault();
+                openFormationBuilder();
+            });
+        }
+
+        /* ---- DATI REALI ---- */
+        const T = [["Atalanta", "Bergamo", "Gewiss Stadium", "#1e71b8", "#111", 7], ["Bologna", "Bologna", "Renato Dall'Ara", "#a8192e", "#14305f", 5], ["Cagliari", "Cagliari", "Unipol Domus", "#a41e35", "#14305f", 2], ["Como", "Como", "Giuseppe Sinigaglia", "#1b5aa7", "#fff", 3], ["Frosinone", "Frosinone", "Benito Stirpe", "#f2c500", "#14305f", 2], ["Fiorentina", "Firenze", "Artemio Franchi", "#6a2f9e", "#fff", 4], ["Genoa", "Genova", "Luigi Ferraris", "#a31c2c", "#14305f", 3], ["Inter", "Milano", "San Siro", "#0a3a8a", "#000", 9], ["Juventus", "Torino", "Allianz Stadium", "#e9e9e9", "#000", 9], ["Lazio", "Roma", "Olimpico", "#87c5ec", "#fff", 6], ["Lecce", "Lecce", "Via del Mare", "#f2c500", "#c8102e", 2], ["Milan", "Milano", "San Siro", "#c8102e", "#000", 8], ["Napoli", "Napoli", "Diego Armando Maradona", "#12a0d7", "#fff", 8], ["Parma", "Parma", "Ennio Tardini", "#f2c500", "#14305f", 3], ["Monza", "Monza", "U-Power Stadium", "#c8102e", "#fff", 2], ["Roma", "Roma", "Olimpico", "#8e1f2f", "#f2a900", 6], ["Sassuolo", "Sassuolo", "Mapei Stadium", "#0a8a4a", "#000", 3], ["Torino", "Torino", "Olimpico Grande Torino", "#7a1f1f", "#fff", 3], ["Udinese", "Udine", "Bluenergy Stadium", "#cfcfcf", "#000", 3], ["Venezia", "Venezia", "Pier Luigi Penzo", "#0a7a4a", "#e8731c", 1]];
+
+        const ABB = { ATA: 0, BFC: 1, CAG: 2, COM: 3, FRO: 4, FIO: 5, GEN: 6, INT: 7, JUV: 8, LAZ: 9, LEC: 10, ACM: 11, NAP: 12, PAR: 13, MON: 14, ROM: 15, SAS: 16, TOR: 17, UDI: 18, VEN: 19 };
+
+        const DAY = 5, ini = n => n.slice(0, 3).toUpperCase();
+
+        const mk = a => a.map(([h, w, x, y, d, p]) => [ABB[h], ABB[w], x, y, new Date(d + ':00+02:00'), p]);
+
+        const R = {
+            4: mk([["MON", "SAS", 2, 1, "2026-09-18T20:45"], ["BFC", "TOR", 1, 1, "2026-09-19T15:00"], ["UDI", "CAG", 0, 1, "2026-09-19T15:00"], ["ROM", "INT", 2, 2, "2026-09-19T18:00"], ["VEN", "LAZ", 0, 2, "2026-09-19T20:45"], ["FIO", "NAP", 1, 1, "2026-09-20T12:30"], ["FRO", "COM", 2, 0, "2026-09-20T15:00"], ["PAR", "GEN", 2, 1, "2026-09-20T15:00"], ["JUV", "ATA", 2, 0, "2026-09-20T18:00"], ["ACM", "LEC", 3, 0, "2026-09-20T20:45"]]),
+            5: mk([["GEN", "FIO", null, null, "2026-10-10T15:00", [30.4, 28.8, 40.8]], ["INT", "PAR", null, null, "2026-10-10T18:00", [84.5, 10.1, 5.4]], ["NAP", "FRO", null, null, "2026-10-10T20:45", [67.3, 18.3, 14.4]], ["COM", "ROM", null, null, "2026-10-11T12:30", [37.7, 26.4, 35.9]], ["LAZ", "MON", null, null, "2026-10-11T15:00", [61.3, 22.8, 15.9]], ["LEC", "BFC", null, null, "2026-10-11T15:00", [23, 28.1, 48.9]], ["SAS", "ACM", null, null, "2026-10-11T18:00", [22.2, 24.9, 52.9]], ["CAG", "JUV", null, null, "2026-10-11T20:45", [15.3, 23.3, 61.4]], ["ATA", "VEN", null, null, "2026-10-12T18:30", [61.2, 21.4, 17.4]], ["TOR", "UDI", null, null, "2026-10-12T20:45", [40.2, 29.2, 30.6]]])
+        };
+
+        const FX = Array.from({ length: 38 }, (_, r) => (R[r] || []).map(m => [m[0], m[1]]));
+        const date = r => R[r] ? R[r][0][4] : null;
+        const hs = (a, b, r) => ((a * 73856093) ^ (b * 19349663) ^ (r * 83492791)) >>> 0;
+
+        function simRes(a, b, r) { const h = hs(a, b, r); let x = [0, 1, 1, 2, 2, 3, 4][(h >> 3) % 7], y = [0, 0, 1, 1, 2, 3][(h >> 9) % 6]; if (T[a][5] > T[b][5] + 3) x++; if (T[b][5] > T[a][5] + 3) y++; return [x, y] }
+
+        const res = (a, b, r) => { const m = (R[r] || []).find(z => z[0] == a && z[1] == b); return m && m[2] != null ? [m[2], m[3]] : null };
+
+        const TB = [["ROM", 4, 1, 0], ["INT", 4, 1, 0], ["LAZ", 4, 1, 0], ["CAG", 4, 0, 1], ["ACM", 3, 2, 0], ["FRO", 3, 1, 1], ["JUV", 3, 1, 1], ["COM", 3, 1, 1], ["NAP", 2, 1, 2], ["SAS", 2, 1, 2], ["ATA", 2, 0, 3], ["LEC", 2, 0, 3], ["UDI", 1, 1, 3], ["TOR", 1, 1, 3], ["PAR", 1, 1, 3], ["MON", 1, 1, 3], ["FIO", 1, 1, 3], ["BFC", 0, 2, 3], ["GEN", 0, 1, 4], ["VEN", 0, 0, 5]].map(([c, v, n, p]) => ({ i: ABB[c], pg: v + n + p, v, n, p, pt: v * 3 + n }));
+
+        const FORMATION_ROWS = {
+            '4-3-3': [['lw', 'st', 'rw'], ['cm', 'cm', 'cm'], ['lb', 'cb', 'cb', 'rb'], ['gk']],
+            '3-4-3': [['lw', 'st', 'rw'], ['lb', 'cm', 'cm', 'rb'], ['cb', 'cb', 'cb'], ['gk']],
+            '4-2-3-1': [['st'], ['lw', 'cam', 'rw'], ['cm', 'cm'], ['lb', 'cb', 'cb', 'rb'], ['gk']],
+            '3-5-2': [['st', 'st'], ['lb', 'cm', 'cm', 'cm', 'rb'], ['cb', 'cb', 'cb'], ['gk']],
+            '3-4-2-1': [['st'], ['cam', 'cam'], ['lb', 'cm', 'cm', 'rb'], ['cb', 'cb', 'cb'], ['gk']],
+            '3-5-1-1': [['st'], ['cam'], ['lb', 'cm', 'cm', 'cm', 'rb'], ['cb', 'cb', 'cb'], ['gk']]
+        };
+
+        const CLUB_SQUADS = [
+            { formation: '4-3-3', starters: { gk: 'Carnesecchi', rb: 'Bellanova', cb: 'Scalvini|Kristensen', lb: 'Bernasconi', cm: 'Kessié|Gaetano|Ederson', rw: 'De Ketelaere', st: 'Scamacca', lw: 'Rowe' }, alternatives: { cb: 'Hien|Kolasinac', rb: 'Zappacosta', cm: 'Samardzic', lw: 'Raspadori', st: 'Krstovic' } },
+            { formation: '3-4-3', starters: { gk: 'Skorupski', cb: 'Helland|Heggem|Theate', rb: 'Zortea', cm: 'Pobega|Ferguson', lb: 'Miranda', rw: 'Orsolini', st: 'Dovbyk', lw: 'Cambiaghi' }, alternatives: { rb: 'Holm', cm: 'Moro', rw: 'Bernardeschi', st: 'Piccoli' } },
+            { formation: '4-3-3', starters: { gk: 'Caprile', rb: 'Zè Pedro', cb: 'Mina|Rodriguez', lb: 'Obert', cm: 'Adopo|Winks|Romano', rw: 'Maldini', st: 'Mendy', lw: 'Fazzini' }, alternatives: { rb: 'Sugawara', cm: 'Deiola', st: 'Nzola' } },
+            { formation: '4-2-3-1', starters: { gk: 'Butez', rb: 'Yan Couto', cb: 'Chalobah|Ramon', lb: 'Valle', cm: 'Da Cunha|Perrone', rw: 'Diao', cam: 'Nico Paz', lw: 'Baturina', st: 'Douvikas' }, alternatives: { lb: 'Kaiki', cb: 'Kempf', cm: 'Milla', cam: 'Rodriguez', st: 'Kean' } },
+            { formation: '4-2-3-1', starters: { gk: 'Palmisani', rb: 'Oyono', cb: 'Calvani|Monterisi', lb: 'Bracaglia', cm: 'Masini|Calò', rw: 'Ghedjemis', cam: 'Schmid', lw: 'Kvernadze', st: 'Raimondo' }, alternatives: { lb: 'Terzic', cm: 'Grilitsch', rw: 'Fini' } },
+            { formation: '4-3-3', starters: { gk: 'De Gea', rb: 'Jimenez', cb: 'Dragusin|Ranieri', lb: 'Viery', cm: 'Ndour|Fagioli|Atta', rw: 'Mastantuono', st: 'Pellegrino', lw: 'Pedro Goncalves' }, alternatives: { lb: 'Valdepenas', cb: 'Valdepenas', cm: 'Oulai', rw: 'Njie', st: 'Beto' } },
+            { formation: '3-5-2', starters: { gk: 'Bijlow', cb: 'Marcandalli|Ostigard|Vasquez', rb: 'Ehizibue', cm: 'Frendrup|Sow|Baldanzi', lb: 'Ellertsson', st: 'Osmajic|Colombo' }, alternatives: { rb: 'Drameh', st: 'Messias|El Shaarawy|Vitinha' } },
+            { formation: '3-5-2', starters: { gk: 'Martinez', cb: 'Bisseck|Akanji|Bastoni', rb: 'Diouf', cm: 'Barella|Calhanoglu|Zielinski', lb: 'Dimarco', st: 'Lautaro|Thuram' }, alternatives: { cb: 'Stones', rb: 'Spence', cm: 'Sucic', st: 'Pio Esposito' } },
+            { formation: '4-2-3-1', starters: { gk: 'Vicario', rb: 'Kalulu', cb: 'Bremer|Lucumì', lb: 'Celik', cm: 'Douglas Luiz|McKennie', rw: 'Conceiçao', cam: 'Nico Gonzalez', lw: 'Yildiz', st: 'Kolo Muani' }, alternatives: { gk: 'Sarr', cam: 'Alajbegovic', st: 'Woltemade' } },
+            { formation: '4-3-3', starters: { gk: 'Mandas', rb: 'Marusic', cb: 'Doekhi|Provstgaard', lb: 'Nuno Tavares', cm: 'Taylor|Rovella|Frattesi', rw: 'Cancellieri', st: 'Noslin', lw: 'Zaccagni' }, alternatives: { cb: 'Sutalo', rb: 'Floriani', cm: 'Cataldi', rw: 'Isaksen', st: 'Pinamonti' } },
+            { formation: '4-3-3', starters: { gk: 'Falcone', rb: 'D. Veiga', cb: 'Gaspar|Tiago Gabriel', lb: 'Gallo', cm: 'Ilic|Ngom|Coulibaly', rw: 'Pierotti', st: 'Geubbels', lw: 'Monteiro' }, alternatives: { cb: 'Siebert', cm: 'Berisha', rw: "N'dri", st: 'Stulic' } },
+            { formation: '3-4-2-1', starters: { gk: 'Maignan', cb: 'Gila|De Winter|Pavlovic', rb: 'Chukwueze', cm: 'Modric|Rabiot', lb: 'Moreira', cam: 'Pulisic|Cissé', st: 'Ramos' }, alternatives: { cb: 'Gabbia', lb: 'Estupinan', cm: 'Musah', rb: 'Saelemaekers' } },
+            { formation: '4-3-3', starters: { gk: 'Meret', rb: 'Di Lorenzo', cb: 'Rrahmani|Beukema', lb: 'Spinazzola', cm: 'De Bruyne|Lobotka|McTominay', rw: 'Politano', st: 'Hojlund', lw: 'Lang' }, alternatives: { gk: 'Milinkovic', lb: 'Olivera', cm: 'Marin|Anguissa', rw: 'Alisson|Neres' } },
+            { formation: '3-5-2', starters: { gk: 'Corvi', cb: 'Delprato|Troilo|Diego Carlos', rb: 'Britschgi', cm: 'Bernabé|Keita|Touré', lb: 'Valeri', st: 'Lontani|Romero' }, alternatives: { cm: 'Sierro|Fabbian', st: 'Elphege' } },
+            { formation: '3-4-2-1', starters: { gk: 'Tornqvist', cb: 'Kouadio|Ziolkowski|Carboni', rb: 'Birindelli', cm: 'Pessina|Folorunsho', lb: 'Mangas', cam: 'Zeballos|Robinson', st: 'Varela' }, alternatives: { cm: 'Akinsanmiro', cam: 'Colpani|Ngonge', st: 'Cutrone' } },
+            { formation: '3-4-2-1', starters: { gk: 'Svilar', cb: 'Hermoso|Mancini|Balerdi', rb: 'Molina', cm: 'Cristante|Kone', lb: 'Wesley', cam: 'Soulé|Dybala', st: 'Malen' }, alternatives: { cb: 'Ndicka', cm: 'Lulli', cam: 'Mora' } },
+            { formation: '4-3-3', starters: { gk: 'Muric', rb: 'Cinquegrano', cb: 'Idzes|Leysen', lb: 'Doig', cm: 'Bakola|Matic|Thorstvedt', rw: 'Berardi', st: 'Esposito', lw: 'Laurienté' }, alternatives: { lb: 'Obrador', cm: 'Adzic', rw: 'Volpato', st: 'Bowie' } },
+            { formation: '3-5-1-1', starters: { gk: 'Lucas Perri', cb: 'Comuzzo|Coco|Comert', rb: 'Belghali', cm: 'Mandragora|Fitz-Jim|Braganca', lb: 'Cacciamani', cam: 'Vlasic', st: 'Simeone' }, alternatives: { rb: 'Fortini', cm: 'Gineitis|Casadei', st: 'Adams' } },
+            { formation: '3-5-2', starters: { gk: 'Okoye', cb: 'Abankwah|Kabasele|Solet', rb: 'Vojvoda', cm: 'Ekkelenkamp|Karlstrom|Piotrowski', lb: 'Kamara', st: 'Zaniolo|Davis' }, alternatives: { cb: 'Alaba', cm: 'Miller|Unai Gomez' } },
+            { formation: '3-5-2', starters: { gk: 'Stankovic', cb: 'Bella-Kotchap|Schingtienne|Juan Jesus', rb: 'Hainaut', cm: 'Basic|Busio|Kike Perez', lb: 'Correia', st: 'Adams|Yeboah' }, alternatives: { rb: 'Mazzocchi', lb: 'Haps', cm: 'Sohm' } }
+        ];
+
+        const CLUB_COACHES = ['Sarri', 'Palladino', 'Pisacane', 'Fabregas', 'Alvini', 'Vanoli', 'De Rossi', 'Chivu', 'Spalletti', 'Gattuso', 'Di Francesco', 'Amorim', 'Allegri', 'Cuesta', 'Juric', 'Gasperini', 'Aquilani', 'Abate', 'Runjaic', 'Stroppa'];
+
+        const normalizePlayerName = name => name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+        const USER_OVERALL_ROWS = `
+87|Lautaro Martínez;Mike Maignan;Nicolò Barella
+86|Scott McTominay;Federico Dimarco;Bremer;Marco Carnesecchi;Alessandro Bastoni
+85|Paulo Dybala;Adrien Rabiot;Mile Svilar;Hakan Çalhanoğlu;Marcus Thuram;Kevin De Bruyne;Luka Modrić
+84|Kenan Yıldız;Nico Paz;Manuel Locatelli;Wladimiro Falcone;Gianluca Mancini
+83|Ivan Provedel;David de Gea;Christian Pulisic;Stanislav Lobotka;Rafael Leão;Donyell Malen;Evan Ndicka;Manuel Akanji;Amir Rrahmani
+82|Éderson;Zambo Anguissa;Giovanni Di Lorenzo;Piotr Zieliński;Riccardo Orsolini;Mattia Zaccagni;Domenico Berardi;Moise Kean
+81|Khéphren Thuram;Manu Koné;Luis Milla;Henrikh Mkhitaryan;Bryan Cristante;Mario Gila;Alex Meret;Charles De Ketelaere;Pierre Kalulu;Mario Hermoso;David Neres;Alessandro Buongiorno;Alessio Romagnoli
+80|Weston McKennie;Wesley;Davide Frattesi;Michele Di Gregorio;Carlos Augusto;Andrea Cambiaso;Youssouf Fofana;Leonardo Spinazzola;Elia Caprile;Benjamin Pavard;Djed Spence;Vanja Milinković-Savić;Guglielmo Vicario;Marten de Roon;Alexis Saelemaekers;Nikola Vlašić;Matías Soulé
+78|Douglas Luiz;Lucas Da Cunha;Kenneth Taylor;Adam Marušić;Samuele Ricci;Raoul Bellanova;Sead Kolašinac;Romano Schmid
+77|Luis Henrique;Lewis Ferguson;Nahuel Molina;Rodrigo Mora
+76|Djibril Sow;Eljif Elmas;Nicolò Zaniolo;Marc-Oliver Kempf;Josep Martínez;Jhon Lucumí
+75|Fabio Miretti;Manuel Lazzari;Jurgen Ekkelenkamp;Nikola Moro;Ismaël Koné;Fabiano Parisi;Hamed Junior Traoré;Hans Nicolussi Caviglia;Akor Adams;Tommaso Baldanzi;Martin Vitík
+74|Filip Stanković;Davide Bartesaghi;Jesper Karlsson;Patrick Cutrone;Christos Mandas;Alisson Santos;Luca Pellegrini
+73|Giovanni Fabbian;Gaetano Oristanio;Gabriele Zappa;Jesper Lindstrøm;Sandi Lovrić;Matija Frigan;Andrea Adorante;M'Bala Nzola;Eray Cömert;Fedde Leysen;Christian Kabasele;Marin Pongračić;Matías Moreno;Alberto Dossena
+72|Antonín Barák;Demba Thiam;Oliver Sørensen;Alessio Zerbin;Alfred Duncan;Jakub Piotrowski;Cher Ndour;Hassane Kamara;Junior Messias;Patrick Ciurria;Daniel Boloca;Luca Mazzitelli;Cyril Ngonge
+71|Mikael Egill Ellertsson;Idrissa Touré;Santiago Pierotti;Fali Candé;Alieu Fadera;Rahim Alhassane;Giovane;Youssef Maleh;Harry Winks;Robinio Vaz;Kerim Alajbegović;Oier Zarraga;Antoine Hainaut
+70|Warren Bondo;Andrea Ghion;Lion Lauberbach;Alan Matturro;Gabriele Bracaglia;Viery;Lameck Banda;Oliver Provstgaard;Kevin Carlos;Joël Marcel Schingtienne;Jan Ziółkowski;Ilario Monterisi;Botond Balogh;Filippo Delli Carri;Mariano Troilo
+69|Giuseppe Aurelio;Ridgeciano Haps;Richie Sagrado;Antonio Vergara;Costantino Favasuli;Bartol Franjić;Danilo Veiga;Luis Hasa;Luca Lezzerini;Lorenzo De Silvestri;Boris Radunović;Vasilije Adžić;Giorgi Kvernadze;Elias Havel;Lorenzo Palmisani;James Abankwah;Medon Berisha
+68|Þórir Jóhann Helgason;David Puczka;Tommaso Fumagalli;Raffaele Di Gennaro;Matteo Cichella;Eivind Helland;Francesco Gelli;Owen Kouassi;Gabriele Artistico;Vakoun Issouf Bayo;Petar Ratkov
+67|Reda Belahyane;Giovanni Daffara;Edoardo Pieragnolo;Lamine Fanne;Niccolò Fortini;Kieron Bowie
+66|Alen Sherri;Alessio Cacciamani;Laurs Skjellerup;Marko Farji;Darryl Bakola;Víctor Valdepeñas;Oumar Ngom;Corrie Ndaba;Adrian Przyborek;Francesco Camarda;Filipe Bordon;Redouane Halhal;Alphadjo Cissé;Joseph Liteta
+65|Rachid Kouda;Patrick Amoako Nuamah;Christian Comotto;Leonardo Colombo;Alessandro Romano;Matteo Pisseri;Marco Dalla Vecchia;Alvin Obinna Okoro;Omari Forson;Alieu Njie
+63|Antonio Arena;Flavio Russo;Peter Amoran;Kevin Miranda
+62|Aaron Ciammaglichella;Gioele Zacchi;Lorenzo Torriani;Davide Renzetti;Eddy Kouadio;Sebastian Esposito`;
+
+        const USER_OVERALLS = new Map(USER_OVERALL_ROWS.trim().split(/\r?\n/).flatMap(row => {
+            const [overall, names] = row.split('|');
+            return names.split(';').map(name => [normalizePlayerName(name), Number(overall)]);
+        }));
+
+        const PLAYER_OVERALL_ALIASES = {
+            martinez: 'josep martinez',
+            alisson: 'alisson santos',
+            adams: 'akor adams',
+            kone: 'manu kone',
+            dveiga: 'danilo veiga'
+        };
+
+        const EA_OVERALLS = new Map(Object.entries({
+            Bernasconi: 71,
+            Scamacca: 78,
+            Rowe: 76,
+            Hien: 79,
+            Zappacosta: 79,
+            Samardzic: 78,
+            Raspadori: 78,
+            Krstovic: 76,
+            Scalvini: 77,
+            Kristensen: 72,
+            Skorupski: 78,
+            Heggem: 75,
+            Theate: 80,
+            Zortea: 73,
+            Pobega: 74,
+            Miranda: 76,
+            Dovbyk: 79,
+            Cambiaghi: 76,
+            Holm: 75,
+            Bernardeschi: 75,
+            Piccoli: 75,
+            Butez: 76,
+            'Yan Couto': 77,
+            Chalobah: 79,
+            Valle: 72
+        }).map(([name, overall]) => [normalizePlayerName(name), overall]));
+
+        function getPlayerOverall(name) {
+            const normalized = normalizePlayerName(name);
+            const alias = normalizePlayerName(PLAYER_OVERALL_ALIASES[normalized] || name);
+            if (USER_OVERALLS.has(alias)) return USER_OVERALLS.get(alias);
+            const matches = [...USER_OVERALLS].filter(([ratedName]) => ratedName.endsWith(alias) || ratedName.startsWith(alias));
+            const ratings = [...new Set(matches.map(([, overall]) => overall))];
+            return ratings.length === 1 ? ratings[0] : EA_OVERALLS.get(alias) ?? null;
+        }
+
+        const ROLE_NAMES = {
+            gk: 'Portiere',
+            cb: 'Difensore',
+            lb: 'Terzino Sinistro',
+            rb: 'Terzino Destro',
+            cm: 'Centrocampista',
+            cam: 'Trequartista',
+            lw: 'Ala Sinistra',
+            rw: 'Ala Destra',
+            st: 'Attaccante'
+        };
+
+        const ROLE_SHORT = {
+            gk: 'GK',
+            cb: 'CB',
+            lb: 'LB',
+            rb: 'RB',
+            cm: 'CM',
+            cam: 'CAM',
+            lw: 'LW',
+            rw: 'RW',
+            st: 'ST'
+        };
+
+        let currentFormation = null;
+        let selectedTeam = null;
+        let userLineup = {};
+        let draftedTeams = new Set();
+        let usedPlayers = new Set();
+        let activeDraftPlayers = [];
+        let clubSkips = 0;
+
+        function updateClubSkipControl() {
+            $('#club-skip-count').textContent = `${clubSkips}/3`;
+            $('#next-team-btn').disabled = selectedTeam === null || clubSkips >= 3;
+        }
+
+        // BASIC FUNCTIONS ONLY - REST WILL BE ADDED
+        function openFormationBuilder() {
+            console.log('OPENING FORMATION BUILDER');
+            const forma = $('#forma');
+            forma.classList.add('active');
+            document.body.classList.add('builder-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFormationBuilder() {
+            closePlayerModal();
+            const forma = $('#forma');
+            forma.classList.remove('active');
+            document.body.classList.remove('builder-open');
+            document.body.style.overflow = '';
+        }
+
+        function closePlayerModal() {
+            const modal = $('#player-modal');
+            modal.classList.remove('active');
+        }
+
+        function getClubPlayers(clubIndex) {
+            const squad = CLUB_SQUADS[clubIndex];
+            const players = new Map();
+            [...Object.entries(squad.starters), ...Object.entries(squad.alternatives)].forEach(([role, roster]) => {
+                roster.split('|').map(name => name.trim()).filter(Boolean).forEach(name => {
+                    const playerKey = normalizePlayerName(name);
+                    const player = players.get(playerKey) || { name, club: clubIndex, roles: [], overall: getPlayerOverall(name) };
+                    if (!player.roles.includes(role)) player.roles.push(role);
+                    players.set(playerKey, player);
+                });
+            });
+            return [...players.values()].sort((a, b) => (b.overall ?? -1) - (a.overall ?? -1));
+        }
+
+        function getRoleSlotId(role, roleIndex) {
+            return `${role}-${roleIndex}`;
+        }
+
+        function getOpenRoles(roles) {
+            const roleCapacity = {};
+            const roleFilled = {};
+            FORMATION_ROWS[currentFormation].flat().forEach(role => {
+                roleCapacity[role] = (roleCapacity[role] || 0) + 1;
+            });
+            Object.values(userLineup).forEach(player => {
+                roleFilled[player.role] = (roleFilled[player.role] || 0) + 1;
+            });
+            return roles.filter(role => roleCapacity[role] && (roleFilled[role] || 0) < roleCapacity[role]);
+        }
+
+        function renderFormation() {
+            if (!currentFormation) {
+                $('#pitch-builder').replaceChildren();
+                $('#forma-info').style.display = 'none';
+                return;
+            }
+            const roleCounts = {};
+            $('#pitch-builder').innerHTML = `<div class="pitch-grid">${FORMATION_ROWS[currentFormation].map(row => `<div class="pitch-row">${row.map(role => {
+                const roleIndex = roleCounts[role] || 0;
+                const slotId = getRoleSlotId(role, roleIndex);
+                roleCounts[role] = roleIndex + 1;
+                const player = userLineup[slotId];
+                return player
+                    ? `<div class="pitch-slot filled" data-slot="${slotId}" data-role="${role}" style="--pc:${T[player.club][3]}"><span class="slot-shirt">${ROLE_SHORT[role]}</span><span class="player-mini">${player.name}</span><span class="slot-overall">OVR ${player.overall ?? '--'}</span><span class="slot-club">${T[player.club][0]}</span></div>`
+                    : `<div class="pitch-slot empty" data-role="${role}"><span class="slot-plus" aria-hidden="true">+</span><span class="role">${ROLE_NAMES[role]}</span></div>`;
+            }).join('')}</div>`).join('')}</div>`;
+            $('#forma-info').style.display = 'flex';
+            $('#forma-team').textContent = Object.keys(userLineup).length === 11 ? 'DRAFT COMPLETATO' : 'SQUADRA IN COSTRUZIONE';
+            $('#lineup-count').textContent = `${Object.keys(userLineup).length} / 11 GIOCATORI`;
+        }
+
+        function openPlayerSelection() {
+            const candidates = activeDraftPlayers.map(player => ({ ...player, availableRoles: getOpenRoles(player.roles) }));
+            $('#modal-title').textContent = 'SCEGLI UN GIOCATORE';
+            $('#modal-role').textContent = `${T[selectedTeam][0]} · ${candidates.filter(player => player.availableRoles.length).length} COMPATIBILI`;
+            $('#player-grid').innerHTML = candidates.map((player, index) => {
+                const blocked = player.availableRoles.length === 0 || usedPlayers.has(normalizePlayerName(player.name));
+                const roleText = blocked ? 'RUOLO OCCUPATO' : player.availableRoles.map(role => ROLE_SHORT[role]).join(' / ');
+                return `<button class="player-card${blocked ? ' unavailable' : ''}" type="button" data-player="${index}" style="--pc:${T[player.club][3]}"${blocked ? ' disabled' : ''}><span class="flag">${player.availableRoles[0] ? ROLE_SHORT[player.availableRoles[0]] : ROLE_SHORT[player.roles[0]]}</span><span class="name">${player.name}</span><span class="ovr">${player.overall ?? '--'}</span><span class="club">${roleText}</span>${blocked ? '<span class="draft-cross" aria-label="Non selezionabile">×</span>' : ''}</button>`;
+            }).join('');
+            $('#player-modal').classList.add('active');
+        }
+
+        function drawNextDraftTeam() {
+            if (!currentFormation) return;
+            if (Object.keys(userLineup).length >= 11) {
+                selectedTeam = null;
+                activeDraftPlayers = [];
+                $('#draft-club').textContent = 'PRONTO PER LA SIMULAZIONE';
+                $('#next-team-btn').disabled = true;
+                $('#play-btn').style.display = 'inline-block';
+                $('#play-btn').disabled = false;
+                closePlayerModal();
+                renderFormation();
+                return;
+            }
+            let availableTeams = Array.from({ length: T.length }, (_, index) => index)
+                .filter(index => !draftedTeams.has(index))
+                .filter(index => getClubPlayers(index).some(player => getOpenRoles(player.roles).length && !usedPlayers.has(normalizePlayerName(player.name))));
+            if (!availableTeams.length) {
+                draftedTeams.clear();
+                availableTeams = Array.from({ length: T.length }, (_, index) => index)
+                    .filter(index => getClubPlayers(index).some(player => getOpenRoles(player.roles).length && !usedPlayers.has(normalizePlayerName(player.name))));
+            }
+            if (!availableTeams.length) return;
+            selectedTeam = availableTeams[Math.floor(Math.random() * availableTeams.length)];
+            draftedTeams.add(selectedTeam);
+            activeDraftPlayers = getClubPlayers(selectedTeam);
+            $('#forma-info').style.display = 'flex';
+            $('#forma-team').textContent = 'TURNO DRAFT';
+            $('#draft-club').textContent = `${T[selectedTeam][0].toUpperCase()} · ${Object.keys(userLineup).length + 1}° PICK`;
+            updateClubSkipControl();
+            openPlayerSelection();
+        }
+
+        $$('.mod-btn').forEach(button => button.addEventListener('click', () => {
+            clubSkips = 0;
+            currentFormation = button.dataset.mod;
+            userLineup = {};
+            usedPlayers = new Set();
+            draftedTeams = new Set();
+            selectedTeam = null;
+            $$('.mod-btn').forEach(option => {
+                const selected = option === button;
+                option.classList.toggle('active', selected);
+                option.setAttribute('aria-pressed', String(selected));
+            });
+            $('#formation-label').textContent = `MODULO ${currentFormation}`;
+            $('#play-btn').style.display = 'none';
+            $('#play-btn').disabled = true;
+            $('#next-team-btn').disabled = false;
+            renderFormation();
+            drawNextDraftTeam();
+        }));
+
+        $('#next-team-btn').addEventListener('click', () => {
+            if (!selectedTeam || clubSkips >= 3 || draftTimer !== null) return;
+            clubSkips++;
+            drawNextDraftTeam();
+        });
+
+        $('#player-grid').addEventListener('click', event => {
+            const card = event.target.closest('[data-player]');
+            if (!card || card.disabled) return;
+            const player = activeDraftPlayers[+card.dataset.player];
+            if (!player || usedPlayers.has(normalizePlayerName(player.name))) return;
+            const role = getOpenRoles(player.roles)[0];
+            if (!role) return;
+            const roleIndex = Object.values(userLineup).filter(picked => picked.role === role).length;
+            userLineup[getRoleSlotId(role, roleIndex)] = { ...player, role };
+            usedPlayers.add(normalizePlayerName(player.name));
+            clubSkips = 0;
+            closePlayerModal();
+            renderFormation();
+            if (Object.keys(userLineup).length >= 11) {
+                drawNextDraftTeam();
+                return;
+            }
+            drawNextDraftTeam();
+        });
+
+        $('#forma-close').addEventListener('click', closeFormationBuilder);
+        $('#modal-close').addEventListener('click', closePlayerModal);
+        $('#player-modal').addEventListener('click', event => {
+            if (event.target.id === 'player-modal') closePlayerModal();
+        });
+
+        function sampleGoals(expectedGoals) {
+            const threshold = Math.exp(-expectedGoals);
+            let product = 1;
+            let goals = 0;
+            do {
+                goals++;
+                product *= Math.max(Math.random(), Number.EPSILON);
+            } while (product > threshold);
+            return goals - 1;
+        }
+
+        function simulateFullSeason() {
+            const userPlayers = Object.values(userLineup);
+            const averageForRoles = roles => {
+                const selected = userPlayers.filter(player => roles.includes(player.role));
+                return selected.reduce((total, player) => total + (player.overall ?? 70), 0) / (selected.length || 1);
+            };
+            const overall = averageForRoles(userPlayers.map(player => player.role));
+            const attackOverall = averageForRoles(['lw', 'rw', 'st', 'cam']);
+            const midfieldOverall = averageForRoles(['cm', 'cam']);
+            const defenceOverall = averageForRoles(['cb', 'lb', 'rb']);
+            const goalkeeperOverall = averageForRoles(['gk']);
+            const toStrength = rating => Math.max(1, Math.min(9, 1 + (rating - 55) * 0.22));
+            const league = T.map((team, index) => ({
+                id: index,
+                name: team[0],
+                strength: team[5],
+                attack: team[5],
+                defence: team[5],
+                played: 0,
+                wins: 0,
+                draws: 0,
+                losses: 0,
+                goalsFor: 0,
+                goalsAgainst: 0,
+                points: 0,
+                isUser: false
+            }));
+            const replacement = league.reduce((weakest, team, index) => team.strength < league[weakest].strength ? index : weakest, 0);
+            const replacedClub = league[replacement].name;
+            const userTeamId = league[replacement].id;
+            league[replacement] = {
+                id: userTeamId,
+                name: 'LA TUA SQUADRA',
+                strength: toStrength(overall),
+                attack: toStrength(attackOverall) * 0.72 + toStrength(midfieldOverall) * 0.28,
+                defence: toStrength(defenceOverall) * 0.78 + toStrength(goalkeeperOverall) * 0.22,
+                played: 0,
+                wins: 0,
+                draws: 0,
+                losses: 0,
+                goalsFor: 0,
+                goalsAgainst: 0,
+                points: 0,
+                isUser: true
+            };
+
+            let rotation = league.map(team => team.id);
+            const firstHalf = [];
+            for (let round = 0; round < 19; round++) {
+                const fixtures = [];
+                for (let index = 0; index < rotation.length / 2; index++) {
+                    const home = rotation[index];
+                    const away = rotation[rotation.length - 1 - index];
+                    fixtures.push([home, away]);
+                }
+                firstHalf.push(fixtures);
+                const last = rotation.pop();
+                rotation.splice(1, 0, last);
+            }
+            const fixtures = [...firstHalf, ...firstHalf.map(round => round.map(([home, away]) => [away, home]))];
+            const userFixtures = [];
+            fixtures.forEach((roundFixtures, roundIndex) => roundFixtures.forEach(([homeId, awayId]) => {
+                const home = league.find(team => team.id === homeId);
+                const away = league.find(team => team.id === awayId);
+                const homeGoals = sampleGoals(Math.max(0.2, Math.min(3.5, 1.3 + (home.attack - away.defence) * 0.15 + 0.16)));
+                const awayGoals = sampleGoals(Math.max(0.2, Math.min(3.5, 1.05 + (away.attack - home.defence) * 0.15)));
+                home.played++;
+                away.played++;
+                home.goalsFor += homeGoals;
+                home.goalsAgainst += awayGoals;
+                away.goalsFor += awayGoals;
+                away.goalsAgainst += homeGoals;
+                if (homeGoals > awayGoals) {
+                    home.wins++;
+                    home.points += 3;
+                    away.losses++;
+                } else if (homeGoals < awayGoals) {
+                    away.wins++;
+                    away.points += 3;
+                    home.losses++;
+                } else {
+                    home.draws++;
+                    away.draws++;
+                    home.points++;
+                    away.points++;
+                }
+                if (home.isUser || away.isUser) {
+                    userFixtures.push({
+                        round: roundIndex + 1,
+                        home: home.name,
+                        away: away.name,
+                        homeGoals,
+                        awayGoals,
+                        isHome: home.isUser
+                    });
+                }
+            }));
+
+            const standings = league.sort((a, b) => b.points - a.points
+                || (b.goalsFor - b.goalsAgainst) - (a.goalsFor - a.goalsAgainst)
+                || b.goalsFor - a.goalsFor);
+            return { standings, userFixtures, replacedClub };
+        }
+
+        function startSeasonSimulation() {
+            if (Object.keys(userLineup).length !== 11) return;
+            closeFormationBuilder();
+            $('#simul').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            $('#simul-loading').style.display = 'block';
+            $('#simul-results').style.display = 'none';
+            $('#simul-squad-info').textContent = `LA TUA SQUADRA · MODULO ${currentFormation} · CAMPIONATO A 20 SQUADRE`;
+            window.setTimeout(() => {
+                const { standings, userFixtures, replacedClub } = simulateFullSeason();
+                const userPosition = standings.findIndex(team => team.isUser) + 1;
+                const userTeam = standings.find(team => team.isUser);
+                $('#round-results').innerHTML = `<div class="season-summary"><strong>SEI ARRIVATO ${userPosition}°</strong><span>${userTeam.points} punti · ${userTeam.wins} vittorie · ${userTeam.draws} pareggi · ${userTeam.losses} sconfitte</span><span>38 giornate · 19 avversari · 20 squadre · 380 partite totali</span><span>La tua squadra entra al posto di ${replacedClub}.</span></div><div class="round-results"><h2 class="cond">IL TUO CAMPIONATO</h2><div class="user-fixtures">${userFixtures.map(fixture => `<div class="match-sim"><div class="team"><b>${fixture.home}</b><small>${fixture.isHome ? 'CASA' : 'TRASFERTA'}</small></div><div class="score">${fixture.homeGoals} - ${fixture.awayGoals}</div><div class="team"><b>${fixture.away}</b><small>GIORNATA ${fixture.round}</small></div></div>`).join('')}</div></div>`;
+                $('#standings-final').innerHTML = `<div style="overflow-x: auto"><table><thead><tr><th>POS</th><th>SQUADRA</th><th>PG</th><th>V</th><th>N</th><th>P</th><th>DR</th><th>PT</th></tr></thead><tbody>${standings.map((team, index) => `<tr${team.isUser ? ' class="user-standing"' : ''}><td>${index + 1}</td><td>${team.name}</td><td>${team.played}</td><td>${team.wins}</td><td>${team.draws}</td><td>${team.losses}</td><td>${team.goalsFor - team.goalsAgainst}</td><td>${team.points}</td></tr>`).join('')}</tbody></table></div>`;
+                $('#simul-loading').style.display = 'none';
+                $('#simul-results').style.display = 'block';
+            }, 350);
+        }
+
+        $('#play-btn').addEventListener('click', startSeasonSimulation);
+        $('#simul-close').addEventListener('click', () => {
+            $('#simul').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        $('#back-btn').addEventListener('click', () => {
+            $('#simul').classList.remove('active');
+            document.body.style.overflow = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // REST OF ORIGINAL CODE HERE...
+        const shield = i => `<div class="sh cond" style="--c1:${T[i][3]};--c2:${T[i][4]};color:${T[i][3] == '#e9e9e9' || T[i][3] == '#f2c500' || T[i][3] == '#cfcfcf' ? '#000' : '#fff'}">${ini(T[i][0])}</div>`;
+        const fd = d => d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' }) + ' · ' + d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+
+        $('#tr').innerHTML = TB.map((z, k) => { const t = T[z.i]; return `<article class="tp" tabindex="0" style="--c1:${t[3]};--c2:${t[4]}" data-c="${t[3]}">${shield(z.i)}<h3 class="cond">${t[0]}</h3><div class="x">${t[1]} · ${t[2]}<br>Posizione attuale: ${k + 1}° · ${z.pt} pt<br>V ${z.v} · N ${z.n} · P ${z.p}</div></article>` }).join('');
+
+        $$('.tp').forEach(p => { const set = () => { $('#teams').style.background = `color-mix(in srgb,${p.dataset.c} 30%,#050505)`; document.documentElement.style.setProperty('--ac', p.dataset.c) }; p.onmouseenter = p.onfocus = set; p.onclick = () => { $$('.tp').forEach(x => x.classList.remove('o')); p.classList.add('o'); set() }; p.onmouseleave = () => { $('#teams').style.background = '' } });
+
+        const BM = [3, 7, 2, 6, 1].map(i => R[5][i]);
+        $('#tl').innerHTML = BM.map(m => `<article class="bm"><div class="lab">GIORNATA 6</div><div class="vs cond"><span>${ini(T[m[0]][0])}</span><span style="color:#666;font-size:20px">VS</span><span>${ini(T[m[1]][0])}</span></div><small>${fd(m[4])} · ${T[m[0]][2]}</small><div class="cd" data-t="${+m[4]}"></div><br><a class="btn mag" href="#mc" data-a="${m[0]}" data-b="${m[1]}">MATCH DETAILS</a></article>`).join('');
+
+        $$('.bm a').forEach(a => a.onclick = () => match(+a.dataset.a, +a.dataset.b, 5));
+
+        const tick = () => $$('.cd').forEach(e => { let s = Math.max(0, (+e.dataset.t - Date.now()) / 1e3); e.textContent = `${Math.floor(s / 86400)}G ${Math.floor(s % 86400 / 3600)}H ${Math.floor(s % 3600 / 60)}M ${Math.floor(s % 60)}S` }); tick(); setInterval(tick, 1e3);
+
+        let cur = 4, filt = '';
+        $('#chips').innerHTML = FX.map((_, r) => `<button role="tab" data-r="${r}">${r + 1}</button>`).join('');
+        T.forEach((t, i) => $('#tf').add(new Option(t[0], i)));
+
+        function renderCal() {
+            $$('#chips button').forEach(b => b.classList.toggle('on', +b.dataset.r == cur)); const d = date(cur); $('#dt').textContent = d ? `Giornata ${cur + 1} · ${fd(d)}` : `Giornata ${cur + 1}`;
+            const ms = (R[cur] || []).filter(m => filt === '' || m[0] == filt || m[1] == filt), ml = $('#ml'); ml.style.animation = 'none'; void ml.offsetWidth; ml.style.animation = '';
+            ml.innerHTML = ms.map(([a, b, x, y, dd]) => `<div class="mr cond" data-a="${a}" data-b="${b}"><b>${T[a][0]}${filt !== '' && a == filt ? ' <small>CASA</small>' : ''}</b><span class="sc">${x != null ? x + ' - ' + y : fd(dd).slice(-5)}</span><b style="text-align:left">${T[b][0]}${filt !== '' && b == filt ? ' <small>TRASFERTA</small>' : ''}<small>${T[a][2]} · ${x != null ? 'FINALE' : fd(dd).slice(0, -8)}</small></b></div>`).join('') || `<p style="color:#888;padding:20px">${R[cur] ? 'Nessuna partita per questa squadra.' : 'Dati ufficiali di questa giornata non ancora caricati.'}</p>`;
+            $$('.mr').forEach(e => e.onclick = () => { match(+e.dataset.a, +e.dataset.b, cur); $('#mc').scrollIntoView() })
+        }
+
+        $('#chips').onclick = e => { if (e.target.dataset.r) { cur = +e.target.dataset.r; renderCal() } };
+        $('#tf').onchange = e => { filt = e.target.value; renderCal() };
+
+        const zone = k => k < 4 ? '#3dff9a' : k < 6 ? '#ff9a3d' : k == 6 ? '#3dc6ff' : k > 16 ? '#ff4d6a' : 'transparent';
+        $('#tb').innerHTML = TB.map((z, k) => `<tr style="--z:${zone(k)}"><td>${k + 1}<td class="cond" style="font-size:18px">${T[z.i][0]}<td>${z.pg}<td>${z.v}<td>${z.n}<td>${z.p}<td>–<td>–<td>–<td class="pt">${z.pt}</tr>`).join('');
+
+        const row = (l, u, v) => `<div class="sr"><div><span>${u}</span><span>${l}</span><span>${v}</span></div><div class="sb"><i style="--w:${u / (u + v || 1) * 100}%"></i><i style="--w:${v / (u + v || 1) * 100}%"></i></div></div>`;
+
+        function match(a, b, r) {
+            const m = (R[r] || []).find(z => z[0] == a && z[1] == b), ok = m && m[2] != null;
+            $('#mh').innerHTML = `<span>${T[a][0]}</span><span class="num">${ok ? m[2] : '–'}</span><span style="color:#666">VS</span><span class="num">${ok ? m[3] : '–'}</span><span>${T[b][0]}</span>`;
+            if (ok) $('#st').innerHTML = `<p style="text-align:center;color:#aaa">FINALE · ${fd(m[4])} · ${T[a][2]}<br><small>Possesso, tiri e xG non sono disponibili nel feed dati.</small></p>`;
+            else { const p = m && m[5] || [33, 34, 33]; $('#st').innerHTML = `<p style="text-align:center;color:#aaa">Calcio d'inizio: ${m ? fd(m[4]) : ''} — ${T[a][2]}</p>${row('PROBABILITÀ VITTORIA %', p[0], p[2])}<p style="text-align:center;color:#888;font-size:13px">Pareggio ${p[1]}%</p>`; requestAnimationFrame(() => setTimeout(() => $$('.sb i').forEach(i => i.style.width = i.style.getPropertyValue('--w')), 50)) }
+        }
+
+        const SD = [["San Siro", "Milano", "Milan / Inter", "75.800 circa", "1926", "#c8102e", "Il Teatro: quattro anelli e le rampe elicoidali."], ["Olimpico", "Roma", "Roma / Lazio", "70.600 circa", "1953", "#8e1f2f", "Sotto la Curva Sud e la Nord, due città in una."], ["Allianz Stadium", "Torino", "Juventus", "41.500 circa", "2011", "#777", "Il primo grande stadio di proprietà in Italia."], ["Diego Armando Maradona", "Napoli", "Napoli", "54.700 circa", "1959", "#12a0d7", "Un coro unico, una città intera."], ["Gewiss Stadium", "Bergamo", "Atalanta", "25.000 circa", "1928", "#1e71b8", "Il piccolo grande stadio del calcio europeo."], ["Luigi Ferraris", "Genova", "Genoa", "33.200 circa", "1911", "#a31c2c", "Il più antico, nel cuore della città."]];
+
+        $('#sl').innerHTML = SD.map(s => `<article class="sd" style="background:linear-gradient(160deg,${s[5]},#050505 80%)"><div class="lab">${s[1].toUpperCase()}</div><h3 class="cond">${s[0]}</h3><p>${s[6]}</p><div class="k"><span>CAPIENZA ${s[3]}</span><span>${s[4]}</span><span>${s[2]}</span></div></article>`).join('');
+
+        const ST = { "Punti": z => z.pt, "Vittorie": z => z.v, "Pareggi": z => z.n, "Sconfitte (meno è meglio)": z => z.p };
+        $('#tabs').innerHTML = Object.keys(ST).map(k => `<button data-k="${k}">${k}</button>`).join('');
+
+        function bars(k) {
+            $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.k == k)); const f = ST[k], l = [...TB].sort((a, b) => k.includes('meno') ? f(a) - f(b) : f(b) - f(a)).slice(0, 8), mx = Math.max(1, ...l.map(z => Math.abs(f(z))));
+            $('#bars').innerHTML = l.map(z => `<div class="br"><span class="cond">${T[z.i][0]}</span><i data-w="${Math.abs(f(z)) / mx * 100}%"></i><b>${f(z)}</b></div>`).join(''); setTimeout(() => $$('.br i').forEach(i => i.style.width = i.dataset.w), 50)
+        }
+
+        $('#tabs').onclick = e => e.target.dataset.k && bars(e.target.dataset.k); bars("Punti");
+
+        const E = [["GIOVANI TALENTI", "I volti della prossima generazione", "#1b3d22"], ["TATTICA", "Pressing, spazi e nuove linee", "#222"], ["DERBY", "Quando la città si ferma", "#3a1218"], ["TIFOSERIE", "La voce delle curve", "#14305f"], ["STORIA", "Da Pozzo a oggi", "#3a2f12"], ["CITTÀ", "Venti città, venti identità", "#12333a"]];
+        $('#ed').innerHTML = E.map((e, i) => `<article class="ec rv" data-n="0${i + 1}" style="background:linear-gradient(160deg,${e[2]},#050505)"><span>${e[0]}</span><h3 class="cond">${e[1]}</h3></article>`).join('');
+
+        $$('[data-w]').forEach(h => { const walk = n => [...n.childNodes].forEach(c => { if (c.nodeType == 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((w, i) => { if (!w.trim()) return f.append(w); const s = document.createElement('span'); s.className = 'w'; s.textContent = w; s.style.transitionDelay = (i * .06) + 's'; f.append(s) }); c.replaceWith(f) } else walk(c) }); walk(h) });
+
+        const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('on'); e.target.querySelectorAll('[data-n]').forEach(n => { const t = +n.dataset.n, s = performance.now(); (function f(x) { const p = Math.min(1, (x - s) / 1500); n.textContent = Math.round(t * (1 - Math.pow(1 - p, 3))); p < 1 && requestAnimationFrame(f) })(s) }); io.unobserve(e.target) }), { threshold: .2 });
+        $$('.rv').forEach(e => io.observe(e));
+
+        let tk = 0; addEventListener('scroll', () => { if (tk) return; tk = 1; requestAnimationFrame(() => { const y = scrollY; $('#nav').classList.toggle('s', y > 40); if (y < innerHeight * 1.2) $$('[data-p]').forEach(e => e.style.transform = `translate3d(0,${y * e.dataset.p}px,0) scale(${1 + y / innerHeight * .15})`); tk = 0 }) }, { passive: true });
+        $('#bg').onclick = () => $('#nav').classList.toggle('m');
+        $$('#nav a:not(#forma-link)').forEach(a => a.onclick = () => $('#nav').classList.remove('m'));
+        if (formaLink) {
+            formaLink.addEventListener('click', e => {
+                e.preventDefault();
+                $('#nav').classList.remove('m');
+                openFormationBuilder();
+            });
+        }
+
+        const c = $('#pc'), x = c.getContext('2d'); let ps = []; function rs() { c.width = c.offsetWidth; c.height = c.offsetHeight } rs(); addEventListener('resize', rs);
+        for (let i = 0; i < (innerWidth < 700 ? 30 : 70); i++)ps.push({ x: Math.random() * c.width, y: Math.random() * c.height, v: .2 + Math.random() * .6, r: Math.random() * 1.8 });
+        (function pl() { x.clearRect(0, 0, c.width, c.height); x.fillStyle = 'rgba(198,255,61,.55)'; ps.forEach(p => { p.y -= p.v; if (p.y < 0) { p.y = c.height; p.x = Math.random() * c.width } x.beginPath(); x.arc(p.x, p.y, p.r, 0, 7); x.fill() }); requestAnimationFrame(pl) })();
+
+        const cu = $('#cur'); addEventListener('pointermove', e => { cu.style.transform = `translate(${e.clientX - 7}px,${e.clientY - 7}px)` });
+        $$('.mag').forEach(b => { b.onmousemove = e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.x - r.width / 2) * .25}px,${(e.clientY - r.y - r.height / 2) * .4}px)` }; b.onmouseleave = () => b.style.transform = '' });
+
+        $('#enter').onclick = () => {
+            const w = $('#wow'), t = $('#wt'); w.className = 'on'; t.className = 'cond'; document.body.style.overflow = 'hidden';
+            try { const A = new AudioContext();[0, .5].forEach(d => { const o = A.createOscillator(), g = A.createGain(); o.frequency.value = 55; g.gain.setValueAtTime(.4, A.currentTime + d); g.gain.exponentialRampToValueAtTime(.001, A.currentTime + d + .3); o.connect(g).connect(A.destination); o.start(A.currentTime + d); o.stop(A.currentTime + d + .3) }) } catch (e) { }
+            setTimeout(() => t.classList.add('on'), 2200); setTimeout(() => w.classList.add('out'), 4300); setTimeout(() => { w.className = ''; document.body.style.overflow = ''; $('#intro').scrollIntoView() }, 5200)
+        };
+
+        const BK = 'sa_bet_v2'; let B = { cr: 1000, rd: DAY, bets: [] }; try { Object.assign(B, JSON.parse(localStorage.getItem(BK) || '{}')) } catch (e) { }
+        const bsv = () => { try { localStorage.setItem(BK, JSON.stringify(B)) } catch (e) { } }; let slip = [];
+        const MK = [['1', '1'], ['X', 'X'], ['2', '2'], ['U', 'U 2.5'], ['O', 'O 2.5'], ['GG', 'GOL'], ['NG', 'NOGOL']];
+        const odds = (a, b) => { const p = R[5].find(z => z[0] == a && z[1] == b)[5], f = q => Math.max(1.05, +(.93 / q).toFixed(2)); return { '1': f(p[0] / 100), X: f(p[1] / 100), '2': f(p[2] / 100), U: f(.48), O: f(.52), GG: f(.54), NG: f(.46) } };
+        const wins = (k, x, y) => k == '1' ? x > y : k == 'X' ? x == y : k == '2' ? x < y : k == 'U' ? x + y < 3 : k == 'O' ? x + y > 2 : k == 'GG' ? x > 0 && y > 0 : (x == 0 || y == 0);
+        const eu = n => n.toFixed(2).replace('.', ',');
+
+        function renderBet() {
+            $('#bk').textContent = '€ ' + eu(B.cr); $('#bd').textContent = `Giornata ${B.rd + 1} · ${fd(date(B.rd))}`;
+            $('#bmx').innerHTML = FX[5].map(([a, b], i) => { const o = odds(a, b); return `<div class="ev"><div class="cond"><span>${T[a][0]} - ${T[b][0]}</span><small>${T[a][2]}</small></div><div class="og">${MK.map(([k, l]) => `<button class="od${slip.some(z => z.i == i && z.k == k) ? ' on' : ''}" data-i="${i}" data-k="${k}"><b>${l}</b>${eu(o[k])}</button>`).join('')}</div></div>` }).join('');
+            $('#sl2').innerHTML = slip.length ? slip.map((z, n) => `<div class="sel"><span>${T[z.a][0]}-${T[z.b][0]}<br><small style="color:var(--lime)">${MK.find(m => m[0] == z.k)[1]} @ ${eu(z.o)}</small></span><button data-x="${n}" aria-label="Rimuovi">✕</button></div>`).join('') : '<p style="color:#888;font-size:13px">Seleziona le quote per iniziare.</p>';
+            const q = slip.reduce((p, z) => p * z.o, 1), st = Math.max(0, +$('#stk').value || 0); $('#pw').innerHTML = slip.length ? `Quota totale <b>${eu(q)}</b><br>Vincita potenziale <b>€ ${eu(q * st)}</b>` : '';
+            $('#hist').innerHTML = B.bets.slice(0, 8).map(t => `<div class="hb ${t.st}"><b>${t.st == 'p' ? 'IN ATTESA' : t.st == 'w' ? 'VINTA' : 'PERSA'}</b> · G${t.rd + 1} · € ${eu(t.stake)} @ ${eu(t.odd)}${t.st == 'w' ? ' → € ' + eu(t.stake * t.odd) : ''}<br>${t.sel.map(z => `${T[z.a][0]}-${T[z.b][0]} ${MK.find(m => m[0] == z.k)[1]}${z.r ? ' (' + z.r + ')' : ''}`).join('<br>')}</div>`).join('') || '<p style="color:#888;font-size:13px">Nessuna schedina.</p>'
+        }
+
+        $('#bmx').onclick = e => { const b = e.target.closest('.od'); if (!b) return; const i = +b.dataset.i, k = b.dataset.k, [a, c] = FX[5][i], ex = slip.findIndex(z => z.i == i); if (ex >= 0) { const same = slip[ex].k == k; slip.splice(ex, 1); if (same) return renderBet() } slip.push({ i, k, a, b: c, o: odds(a, c)[k] }); renderBet() };
+        $('#sl2').onclick = e => { if (e.target.dataset.x) { slip.splice(+e.target.dataset.x, 1); renderBet() } }; $('#stk').oninput = renderBet;
+        $('#plc').onclick = () => {
+            const st = Math.floor(+$('#stk').value || 0); if (!slip.length) return alert('Seleziona almeno un esito.'); if (st < 1 || st > B.cr) return alert('Puntata non valida: crediti disponibili € ' + eu(B.cr));
+            B.cr -= st; B.bets.unshift({ rd: B.rd, stake: st, odd: +slip.reduce((p, z) => p * z.o, 1).toFixed(2), st: 'p', sel: slip.map(z => ({ a: z.a, b: z.b, k: z.k, o: z.o })) }); slip = []; bsv(); renderBet()
+        };
+        $('#sim').onclick = () => {
+            let w = 0, n = 0; B.bets.forEach(t => { if (t.st != 'p' || t.rd != B.rd) return; n++; let ok = true; t.sel.forEach(z => { const [x, y] = simRes(z.a, z.b, B.rd); z.r = x + '-' + y; if (!wins(z.k, x, y)) ok = false }); t.st = ok ? 'w' : 'l'; if (ok) { B.cr += Math.round(t.stake * t.odd * 100) / 100; w++ } });
+            alert(n ? `Giornata ${B.rd + 1} conclusa: ${w} schedine vinte su ${n}.` : `Nessuna schedina in gioco.`); B.rd = 5; slip = []; bsv(); renderBet()
+        };
+        $('#brs').onclick = () => { if (confirm('Azzerare crediti e storico?')) { B = { cr: 1000, rd: DAY, bets: [] }; slip = []; bsv(); renderBet() } };
+        renderBet();
+        renderCal(); match(15, 7, 4);
+    </script>
+</body>
+
+</html>

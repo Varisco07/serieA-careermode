@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0e0b">
+    <title>Carriera Serie A 26/27</title>
+    <style>
+        :root{--ink:#101410;--paper:#f3f4ed;--muted:#8f9890;--line:#d8ddd3;--lime:#c6ff3d;--red:#e7462e;--green:#174e34;--panel:#fff;--shadow:0 18px 50px #07130b14}
+        *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 "Trebuchet MS",Arial,sans-serif}button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+        .topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1360px)/2));background:var(--ink);color:white}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:900;letter-spacing:.12em}.brand-mark{display:grid;place-items:center;width:38px;height:38px;background:var(--lime);color:var(--ink);font-weight:1000;font-size:14px}.topbar a:last-child{font-size:12px;font-weight:900;letter-spacing:.1em;color:#c4ccc4}
+        main{width:min(1360px,calc(100% - 48px));margin:auto;padding:30px 0 70px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.2em;color:#677167;text-transform:uppercase}.page-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:12px 0 26px}.page-heading h1{font-size:clamp(38px,5vw,64px);line-height:.95;margin:0;letter-spacing:0}.page-heading p{margin:8px 0 0;color:#626b62}.season-tag{padding:9px 12px;background:var(--lime);font-size:11px;font-weight:1000;letter-spacing:.12em;white-space:nowrap}
+        .setup-grid{display:grid;grid-template-columns:minmax(310px,.86fr) minmax(0,1.5fr);gap:22px;align-items:stretch}.setup-panel{background:var(--panel);border:1px solid var(--line);padding:24px;box-shadow:var(--shadow)}.setup-panel h2,.career-panel h2{font-size:20px;margin:0 0 18px}.form-fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.wide{grid-column:1/-1}.field label,.field-label{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#69736a}.field input,.field select{height:44px;width:100%;border:1px solid #cdd3c9;background:#fbfcf8;padding:0 12px;border-radius:0;color:var(--ink)}.choice-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.choice{min-height:42px;border:1px solid #ccd2c9;background:#fff;color:#344034;font-weight:800;font-size:12px}.choice[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--lime)}.choice.foot{font-size:13px}.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:0 17px;border:0;background:var(--red);color:white;font-size:13px;font-weight:1000;letter-spacing:.11em;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}.primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}.form-note{margin:13px 0 0;color:#727b72;font-size:12px}
+        .preview{position:relative;min-height:550px;overflow:hidden;background:var(--green);color:white;display:flex;flex-direction:column;justify-content:space-between;padding:22px;border:1px solid #286948;box-shadow:var(--shadow)}.preview::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#ffffff0a 0 12.5%,transparent 12.5% 25%);pointer-events:none}.preview-top,.preview-bottom,.pitch{position:relative;z-index:1}.preview-top{display:flex;justify-content:space-between;align-items:center;gap:16px}.preview-top b{font-size:11px;letter-spacing:.16em}.preview-top span{font-size:11px;color:#c2d3c6}.career-photo{position:absolute;right:18px;top:58px;width:150px;height:86px;object-fit:cover;opacity:.28;filter:grayscale(.2);mix-blend-mode:screen}.pitch{width:min(100%,560px);height:380px;margin:auto;display:grid;grid-template-rows:repeat(4,1fr);padding:14px 4%;border:1px solid #ffffff60;background:linear-gradient(90deg,transparent calc(50% - 1px),#ffffff40 calc(50% - 1px),#ffffff40 calc(50% + 1px),transparent calc(50% + 1px)) center/100% 100% no-repeat}.pitch::before{content:"";position:absolute;width:90px;height:90px;border:1px solid #ffffff50;border-radius:50%;left:calc(50% - 45px);top:calc(50% - 45px)}.pitch-row{display:flex;align-items:center;justify-content:space-around;gap:4px;z-index:1}.avatar{display:grid;place-items:center;min-width:38px;width:clamp(42px,6vw,58px);height:clamp(42px,6vw,58px);border-radius:50%;border:1px solid #ffffffaa;background:#0e3325;color:white;font-size:10px;font-weight:900;box-shadow:0 3px 9px #001c13aa}.avatar.user{width:74px;height:74px;border:3px solid var(--lime);background:var(--red);font-size:12px;box-shadow:0 0 0 7px #c6ff3d33}.preview-bottom{display:flex;justify-content:space-between;align-items:end;gap:15px}.preview-bottom strong{font-size:clamp(19px,2vw,28px);text-transform:uppercase}.preview-bottom small{display:block;color:#d3e0d6}.rating-preview{text-align:right}.rating-preview b{display:block;color:var(--lime);font-size:34px;line-height:1}
+        .career-panel{margin-top:28px}.career-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}.career-bar h2{margin:0}.career-actions{display:flex;gap:8px;flex-wrap:wrap}.secondary{min-height:40px;padding:0 13px;border:1px solid #b8c0b5;background:transparent;font-size:11px;font-weight:900;letter-spacing:.1em}.secondary:hover{background:var(--ink);color:white;border-color:var(--ink)}.stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin-top:20px;background:var(--line);border:1px solid var(--line)}.stat{min-height:92px;padding:15px;background:#fff}.stat span{display:block;color:#778077;font-size:10px;font-weight:900;letter-spacing:.14em}.stat strong{display:block;margin-top:9px;font-size:25px;line-height:1}.career-result{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;margin-top:24px}.season-result{padding:22px;background:var(--ink);color:#fff}.season-result .place{font-size:clamp(36px,6vw,62px);color:var(--lime);font-weight:1000;line-height:1}.season-result p{color:#b8c0b8;margin:8px 0 0}.league-table{max-height:350px;overflow:auto;background:#fff;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:9px 10px;text-align:left;border-bottom:1px solid #e7eae4}th{position:sticky;top:0;background:#f1f4ec;color:#667066;font-size:10px;letter-spacing:.1em}.user-team{background:#eff6d9;font-weight:900}.history{margin-top:24px;background:#fff;border:1px solid var(--line)}.history h3{font-size:12px;letter-spacing:.14em;padding:15px;margin:0;border-bottom:1px solid var(--line)}.history table td:first-child{font-weight:900}.hidden{display:none!important}.notice{min-height:18px;color:#b83224;font-size:12px;margin-top:8px}
+        footer{padding:25px max(24px,calc((100vw - 1360px)/2));background:var(--ink);color:#aab3aa;display:flex;justify-content:space-between;gap:20px;font-size:11px}footer strong{color:white;letter-spacing:.12em}
+        @media(max-width:900px){.setup-grid{grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr)}.preview{min-height:530px;padding:16px}.career-photo{width:112px;height:70px}.pitch{height:350px}.stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+        @media(max-width:680px){.topbar{height:58px;padding:0 18px}main{width:calc(100% - 28px);padding-top:24px}.page-heading{align-items:start;flex-direction:column;margin-bottom:18px}.setup-grid{grid-template-columns:minmax(0,1fr);gap:12px}.setup-panel{padding:17px}.preview{grid-row:1;min-height:410px}.pitch{height:280px;width:100%}.career-photo{top:56px;right:14px;width:95px;height:60px}.form-fields{gap:12px}.choice-row{grid-template-columns:repeat(5,minmax(0,1fr))}.choice{font-size:10px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.career-result{grid-template-columns:minmax(0,1fr)}.career-bar{align-items:flex-start;flex-direction:column}.preview-bottom strong{font-size:20px}footer{flex-direction:column;padding:22px 18px}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+    </style>
+</head>
+<body>
+    <nav class="topbar" aria-label="Navigazione">
+        <a class="brand" href="index.html"><span class="brand-mark">SA</span><span>SERIE A · 26/27</span></a>
+        <a href="index.html">← TORNA AL CAMPIONATO</a>
+    </nav>
+    <main>
+        <div class="page-heading"><div><div class="eyebrow">Modalità carriera · Italia</div><h1>IL TUO PERCORSO</h1><p>Crea il tuo giocatore e scrivi la sua storia in Serie A.</p></div><div class="season-tag">STAGIONE 2026 / 27</div></div>
+        <section id="create-view" class="setup-grid" aria-label="Crea giocatore">
+            <form class="setup-panel" id="player-form">
+                <div class="eyebrow">01 / IDENTITÀ</div><h2>Registra il tuo giocatore</h2>
+                <div class="form-fields">
+                    <div class="field wide"><label for="player-name">Nome sulla maglia</label><input id="player-name" name="name" maxlength="18" placeholder="Es. A. Rossi" required></div>
+                    <div class="field"><label for="shirt-number">Numero</label><input id="shirt-number" name="number" type="number" min="1" max="99" value="10" required></div>
+                    <div class="field"><label for="player-age">Età iniziale</label><input id="player-age" name="age" type="number" min="16" max="20" value="18" required></div>
+                    <div class="field"><label for="nationality">Nazionalità</label><select id="nationality"><option>Italia</option><option>Argentina</option><option>Brasile</option><option>Francia</option><option>Germania</option><option>Inghilterra</option><option>Marocco</option><option>Paesi Bassi</option><option>Portogallo</option><option>Spagna</option><option>Altra</option></select></div>
+                    <div class="field"><label for="club-choice">Club vivaio</label><select id="club-choice"></select></div>
+                    <div class="field wide"><span class="field-label">Ruolo</span><div class="choice-row" id="positions" role="group" aria-label="Ruolo"></div></div>
+                    <div class="field wide"><span class="field-label">Piede preferito</span><div class="choice-row" id="feet"><button class="choice foot" type="button" data-foot="Sinistro" aria-pressed="false">SINISTRO</button><button class="choice foot" type="button" data-foot="Destro" aria-pressed="true">DESTRO</button></div></div>
+                    <div class="field wide"><button class="primary" type="submit"><span>CREA IL GIOCATORE</span><span aria-hidden="true">→</span></button><div class="notice" id="form-notice" role="alert"></div></div>
+                </div>
+                <p class="form-note">Carriera simulata localmente. Nessun account richiesto.</p>
+            </form>
+            <section class="preview" aria-label="Anteprima del campo">
+                <img class="career-photo" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=360&q=70" alt="Campo da calcio">
+                <div class="preview-top"><b>FORMAZIONE · 4-3-3</b><span>ANTEPRIMA GIOCATORE</span></div>
+                <div class="pitch" aria-hidden="true"><div class="pitch-row"><span class="avatar">AS</span><span class="avatar">PC</span><span class="avatar">AD</span></div><div class="pitch-row"><span class="avatar">ES</span><span class="avatar">CC</span><span class="avatar">CC</span><span class="avatar">ED</span></div><div class="pitch-row"><span class="avatar">TS</span><span class="avatar">DC</span><span class="avatar">DC</span><span class="avatar">TD</span></div><div class="pitch-row"><span class="avatar">POR</span></div></div>
+                <div class="preview-bottom"><div><strong id="preview-name">NUOVO TALENTO</strong><small><span id="preview-role">ATTACCANTE</span> · <span id="preview-club">SCEGLI IL CLUB</span></small></div><div class="rating-preview"><b id="preview-rating">--</b><small>OVR INIZIALE</small></div></div>
+            </section>
+        </section>
+        <section id="career-view" class="career-panel hidden" aria-live="polite">
+            <div class="career-bar"><div><div class="eyebrow">CARRIERA IN CORSO</div><h2 id="career-title"></h2></div><div class="career-actions"><button class="secondary" id="play-season">SIMULA LA STAGIONE →</button><button class="secondary" id="transfer-button">VALUTA TRASFERIMENTO</button><button class="secondary" id="new-career">NUOVA CARRIERA</button></div></div>
+            <div class="stats-grid" id="career-stats"></div>
+            <div class="career-result hidden" id="season-result"></div>
+            <div class="history hidden" id="career-history"><h3>STAGIONI GIOCATE</h3><div class="table-wrap"><table><thead><tr><th>ANNO</th><th>ETÀ</th><th>CLUB</th><th>PG</th><th>GOL</th><th>ASS</th><th>POS.</th><th>PT</th></tr></thead><tbody id="history-body"></tbody></table></div></div>
+        </section>
+    </main>
+    <footer><strong>SERIE A · 26/27</strong><span>Simulatore indipendente, risultati generati per il gioco.</span><a href="index.html">← CAMPIONATO</a></footer>
+    <script>
+        const clubs = [
+            ['Atalanta', 7], ['Bologna', 5], ['Cagliari', 2], ['Como', 3], ['Frosinone', 2], ['Fiorentina', 4], ['Genoa', 3], ['Inter', 9], ['Juventus', 9], ['Lazio', 6], ['Lecce', 2], ['Milan', 8], ['Napoli', 8], ['Parma', 3], ['Monza', 2], ['Roma', 6], ['Sassuolo', 3], ['Torino', 3], ['Udinese', 3], ['Venezia', 1]
+        ];
+        const roles = [
+            ['POR', 'Portiere', 0.01, 0.03], ['DC', 'Difensore', 0.04, 0.07], ['TS', 'Terzino sinistro', 0.04, 0.12], ['TD', 'Terzino destro', 0.04, 0.12], ['CC', 'Centrocampista', 0.10, 0.19], ['TRQ', 'Trequartista', 0.16, 0.23], ['AS', 'Ala sinistra', 0.22, 0.20], ['AD', 'Ala destra', 0.22, 0.20], ['ATT', 'Attaccante', 0.34, 0.13]
+        ];
+        const $ = selector => document.querySelector(selector);
+        let selectedRole = 'ATT';
+        let selectedFoot = 'Destro';
+        let player = null;
+        let currentClub = null;
+        let seasonNumber = 0;
+        let careerHistory = [];
+        let latestLeague = null;
+        const clubSelect = $('#club-choice');
+        clubSelect.innerHTML = clubs.map(([name, strength], index) => `<option value="${index}">${name} · ${strength}/9</option>`).join('');
+        $('#positions').innerHTML = roles.map(([code, name], index) => `<button class="choice" type="button" data-role="${code}" aria-pressed="${index === 8}">${code}</button>`).join('');
+        $('#positions').addEventListener('click', event => {
+            const button = event.target.closest('[data-role]');
+            if (!button) return;
+            selectedRole = button.dataset.role;
+            document.querySelectorAll('#positions .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+            updatePreview();
+        });
+        $('#feet').addEventListener('click', event => {
+            const button = event.target.closest('[data-foot]');
+            if (!button) return;
+            selectedFoot = button.dataset.foot;
+            document.querySelectorAll('#feet .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+        });
+        $('#player-name').addEventListener('input', updatePreview);
+        clubSelect.addEventListener('change', updatePreview);
+        function updatePreview() {
+            const role = roles.find(item => item[0] === selectedRole);
+            $('#preview-name').textContent = ($('#player-name').value.trim() || 'NUOVO TALENTO').toUpperCase();
+            $('#preview-role').textContent = role[1].toUpperCase();
+            $('#preview-club').textContent = clubs[Number(clubSelect.value)][0].toUpperCase();
+        }
+        function randomFrom(seed) {
+            let value = seed >>> 0;
+            return () => {
+                value = (value * 1664525 + 1013904223) >>> 0;
+                return value / 4294967296;
+            };
+        }
+        function poisson(mean, random) {
+            const limit = Math.exp(-mean);
+            let value = 1;
+            let goals = 0;
+            do { goals++; value *= Math.max(random(), Number.EPSILON); } while (value > limit);
+            return goals - 1;
+        }
+        function simulateLeague(userClub, playerOverall, random) {
+            const table = clubs.map(([name, strength], id) => ({ id, name, strength: strength + (id === userClub ? Math.max(-1, (playerOverall - 65) * 0.08) : 0), played: 0, wins: 0, draws: 0, losses: 0, gf: 0, ga: 0, points: 0 }));
+            let rotation = table.map(team => team.id);
+            const firstHalf = [];
+            for (let round = 0; round < rotation.length - 1; round++) {
+                const fixtures = [];
+                for (let index = 0; index < rotation.length / 2; index++) {
+                    let home = rotation[index];
+                    let away = rotation[rotation.length - 1 - index];
+                    if (random() < 0.5) [home, away] = [away, home];
+                    fixtures.push([home, away]);
+                }
+                firstHalf.push(fixtures);
+                rotation = [rotation[0], rotation[rotation.length - 1], ...rotation.slice(1, -1)];
+            }
+            const fullSeason = [...firstHalf, ...firstHalf.map(round => round.map(([home, away]) => [away, home]))];
+            for (const round of fullSeason) for (const [homeId, awayId] of round) {
+                const home = table[homeId];
+                const away = table[awayId];
+                const homeGoals = poisson(Math.max(0.25, Math.min(3.2, 1.4 + (home.strength - away.strength) * 0.16)), random);
+                const awayGoals = poisson(Math.max(0.2, Math.min(3.0, 1.05 + (away.strength - home.strength) * 0.14)), random);
+                home.played++; away.played++;
+                home.gf += homeGoals; home.ga += awayGoals; away.gf += awayGoals; away.ga += homeGoals;
+                if (homeGoals > awayGoals) { home.wins++; home.points += 3; away.losses++; }
+                else if (awayGoals > homeGoals) { away.wins++; away.points += 3; home.losses++; }
+                else { home.draws++; away.draws++; home.points++; away.points++; }
+            }
+            return table.sort((a, b) => b.points - a.points || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf);
+        }
+        function renderCareer() {
+            $('#career-title').textContent = `${player.name} · ${player.age} ANNI · ${currentClub.name.toUpperCase()}`;
+            $('#career-stats').innerHTML = [
+                ['RUOLO', roles.find(role => role[0] === player.role)[0]], ['OVR', player.overall], ['POTENZIALE', player.potential], ['PIEDE', player.foot.toUpperCase()], ['STAGIONI', seasonNumber]
+            ].map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`).join('');
+            $('#play-season').disabled = player.age >= 38;
+            $('#play-season').textContent = player.age >= 38 ? 'CARRIERA CONCLUSA' : 'SIMULA LA STAGIONE →';
+            $('#history-body').innerHTML = careerHistory.map(row => `<tr><td>${row.year}</td><td>${row.age}</td><td>${row.club}</td><td>${row.apps}</td><td>${row.goals}</td><td>${row.assists}</td><td>${row.place}°</td><td>${row.points}</td></tr>`).join('');
+            $('#career-history').classList.toggle('hidden', careerHistory.length === 0);
+        }
+        $('#player-form').addEventListener('submit', event => {
+            event.preventDefault();
+            const form = new FormData(event.currentTarget);
+            const name = String(form.get('name') || '').trim();
+            const number = Number(form.get('number'));
+            const age = Number(form.get('age'));
+            const role = roles.find(item => item[0] === selectedRole);
+            if (!name || number < 1 || number > 99 || age < 16 || age > 20) { $('#form-notice').textContent = 'Controlla nome, numero e età.'; return; }
+            const clubId = Number(clubSelect.value);
+            const random = randomFrom(Date.now() ^ name.length * 8191 ^ clubId * 7919);
+            player = { name, number, age, role: selectedRole, foot: selectedFoot, nationality: $('#nationality').value, overall: Math.round(55 + random() * 17 + (role[0] === 'ATT' ? 2 : 0)), potential: Math.round(77 + random() * 19) };
+            currentClub = { id: clubId, name: clubs[clubId][0] };
+            $('#preview-rating').textContent = player.overall;
+            $('#season-result').classList.add('hidden');
+            $('#create-view').classList.add('hidden');
+            $('#career-view').classList.remove('hidden');
+            renderCareer();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        $('#play-season').addEventListener('click', () => {
+            if (!player || player.age >= 38) return;
+            seasonNumber++;
+            const seed = Math.round(Date.now() % 2147483647) ^ player.number * 331 ^ seasonNumber * 49157 ^ player.overall * 97;
+            const random = randomFrom(seed);
+            const role = roles.find(item => item[0] === player.role);
+            const apps = Math.round(22 + random() * 15 - Math.max(0, player.age - 32) * 1.3);
+            const goals = Math.max(0, Math.round(apps * role[2] * (0.65 + player.overall / 90) + random() * 4 - 1));
+            const assists = Math.max(0, Math.round(apps * role[3] * (0.65 + player.overall / 100) + random() * 3 - 1));
+            latestLeague = simulateLeague(currentClub.id, player.overall, random);
+            const standing = latestLeague.findIndex(team => team.id === currentClub.id) + 1;
+            const userTeam = latestLeague[standing - 1];
+            careerHistory.unshift({ year: 2026 + seasonNumber - 1, age: player.age, club: currentClub.name, apps, goals, assists, place: standing, points: userTeam.points });
+            player.age++;
+            if (player.age <= 28) player.overall = Math.min(player.potential, player.overall + Math.round(random() * 3));
+            else if (player.age >= 33) player.overall = Math.max(45, player.overall - Math.round(random() * 2));
+            const trophy = standing === 1 ? 'CAMPIONE D’ITALIA' : standing <= 4 ? 'QUALIFICAZIONE CHAMPIONS' : 'STAGIONE COMPLETATA';
+            $('#season-result').innerHTML = `<div class="season-result"><div class="eyebrow">${careerHistory[0].year} / ${careerHistory[0].year + 1}</div><div class="place">${standing}° POSTO</div><p>${userTeam.points} punti · ${trophy}</p><p>${apps} presenze · ${goals} gol · ${assists} assist</p></div><div class="league-table"><table><thead><tr><th>POS</th><th>CLUB</th><th>PG</th><th>DR</th><th>PT</th></tr></thead><tbody>${latestLeague.map((team, index) => `<tr class="${team.id === currentClub.id ? 'user-team' : ''}"><td>${index + 1}</td><td>${team.name}</td><td>${team.played}</td><td>${team.gf - team.ga}</td><td>${team.points}</td></tr>`).join('')}</tbody></table></div>`;
+            $('#season-result').classList.remove('hidden');
+            renderCareer();
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        });
+        $('#transfer-button').addEventListener('click', () => {
+            if (!player || !careerHistory.length) { $('#career-title').textContent = `${player.name} · COMPLETA UNA STAGIONE PER RICEVERE OFFERTE`; return; }
+            const threshold = Math.max(3, Math.min(9, Math.round((player.overall - 54) / 4)));
+            const offers = clubs.map((club, id) => ({ id, name: club[0], strength: club[1] })).filter(club => club.id !== currentClub.id && club.strength <= threshold).sort((a, b) => Math.abs(b.strength - threshold) - Math.abs(a.strength - threshold));
+            if (!offers.length) { $('#career-title').textContent = `${player.name} · NESSUNA OFFERTA DISPONIBILE`; return; }
+            const offer = offers[Math.floor(Math.random() * Math.min(3, offers.length))];
+            currentClub = offer;
+            $('#season-result').classList.remove('hidden');
+            $('#season-result').innerHTML = `<div class="season-result"><div class="eyebrow">NUOVA FIRMA</div><div class="place">${offer.name.toUpperCase()}</div><p>${player.name} passa al nuovo club per la prossima stagione.</p></div>`;
+            renderCareer();
+        });
+        $('#new-career').addEventListener('click', () => {
+            player = null; currentClub = null; seasonNumber = 0; careerHistory = []; latestLeague = null;
+            $('#season-result').classList.add('hidden'); $('#preview-rating').textContent = '--'; $('#form-notice').textContent = '';
+            $('#player-form').reset(); selectedRole = 'ATT'; selectedFoot = 'Destro';
+            document.querySelectorAll('#positions .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.role === 'ATT')));
+            document.querySelectorAll('#feet .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.foot === selectedFoot)));
+            updatePreview(); $('#career-view').classList.add('hidden'); $('#create-view').classList.remove('hidden');
+        });
+        updatePreview();
+    </script>
+</body>
+</html>
