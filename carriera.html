@@ -1,69 +1,890 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#0b0e0b">
-    <title>Carriera Serie A 26/27</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#050505">
+    <title>CARRIERA GIOCATORE — SERIE A 26/27</title>
     <style>
-        :root{--ink:#101410;--paper:#f3f4ed;--muted:#8f9890;--line:#d8ddd3;--lime:#c6ff3d;--red:#e7462e;--green:#174e34;--panel:#fff;--shadow:0 18px 50px #07130b14}
-        *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 "Trebuchet MS",Arial,sans-serif}button,input,select{font:inherit}button,a,select{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
-        .topbar{height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1360px)/2));background:var(--ink);color:white}.brand{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:900;letter-spacing:.12em}.brand-mark{display:grid;place-items:center;width:38px;height:38px;background:var(--lime);color:var(--ink);font-weight:1000;font-size:14px}.topbar a:last-child{font-size:12px;font-weight:900;letter-spacing:.1em;color:#c4ccc4}
-        main{width:min(1360px,calc(100% - 48px));margin:auto;padding:30px 0 70px}.eyebrow{font-size:11px;font-weight:900;letter-spacing:.2em;color:#677167;text-transform:uppercase}.page-heading{display:flex;align-items:end;justify-content:space-between;gap:24px;margin:12px 0 26px}.page-heading h1{font-size:clamp(38px,5vw,64px);line-height:.95;margin:0;letter-spacing:0}.page-heading p{margin:8px 0 0;color:#626b62}.season-tag{padding:9px 12px;background:var(--lime);font-size:11px;font-weight:1000;letter-spacing:.12em;white-space:nowrap}
-        .setup-grid{display:grid;grid-template-columns:minmax(310px,.86fr) minmax(0,1.5fr);gap:22px;align-items:stretch}.setup-panel{background:var(--panel);border:1px solid var(--line);padding:24px;box-shadow:var(--shadow)}.setup-panel h2,.career-panel h2{font-size:20px;margin:0 0 18px}.form-fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.wide{grid-column:1/-1}.field label,.field-label{font-size:10px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#69736a}.field input,.field select{height:44px;width:100%;border:1px solid #cdd3c9;background:#fbfcf8;padding:0 12px;border-radius:0;color:var(--ink)}.choice-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.choice{min-height:42px;border:1px solid #ccd2c9;background:#fff;color:#344034;font-weight:800;font-size:12px}.choice[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--lime)}.choice.foot{font-size:13px}.primary{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:52px;padding:0 17px;border:0;background:var(--red);color:white;font-size:13px;font-weight:1000;letter-spacing:.11em;text-transform:uppercase;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s}.primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}.form-note{margin:13px 0 0;color:#727b72;font-size:12px}
-        .preview{position:relative;min-height:550px;overflow:hidden;background:var(--green);color:white;display:flex;flex-direction:column;justify-content:space-between;padding:22px;border:1px solid #286948;box-shadow:var(--shadow)}.preview::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,#ffffff0a 0 12.5%,transparent 12.5% 25%);pointer-events:none}.preview-top,.preview-bottom,.pitch{position:relative;z-index:1}.preview-top{display:flex;justify-content:space-between;align-items:center;gap:16px}.preview-top b{font-size:11px;letter-spacing:.16em}.preview-top span{font-size:11px;color:#c2d3c6}.career-photo{position:absolute;right:18px;top:58px;width:150px;height:86px;object-fit:cover;opacity:.28;filter:grayscale(.2);mix-blend-mode:screen}.pitch{width:min(100%,560px);height:380px;margin:auto;display:grid;grid-template-rows:repeat(4,1fr);padding:14px 4%;border:1px solid #ffffff60;background:linear-gradient(90deg,transparent calc(50% - 1px),#ffffff40 calc(50% - 1px),#ffffff40 calc(50% + 1px),transparent calc(50% + 1px)) center/100% 100% no-repeat}.pitch::before{content:"";position:absolute;width:90px;height:90px;border:1px solid #ffffff50;border-radius:50%;left:calc(50% - 45px);top:calc(50% - 45px)}.pitch-row{display:flex;align-items:center;justify-content:space-around;gap:4px;z-index:1}.avatar{display:grid;place-items:center;min-width:38px;width:clamp(42px,6vw,58px);height:clamp(42px,6vw,58px);border-radius:50%;border:1px solid #ffffffaa;background:#0e3325;color:white;font-size:10px;font-weight:900;box-shadow:0 3px 9px #001c13aa}.avatar.user{width:74px;height:74px;border:3px solid var(--lime);background:var(--red);font-size:12px;box-shadow:0 0 0 7px #c6ff3d33}.preview-bottom{display:flex;justify-content:space-between;align-items:end;gap:15px}.preview-bottom strong{font-size:clamp(19px,2vw,28px);text-transform:uppercase}.preview-bottom small{display:block;color:#d3e0d6}.rating-preview{text-align:right}.rating-preview b{display:block;color:var(--lime);font-size:34px;line-height:1}
-        .career-panel{margin-top:28px}.career-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}.career-bar h2{margin:0}.career-actions{display:flex;gap:8px;flex-wrap:wrap}.secondary{min-height:40px;padding:0 13px;border:1px solid #b8c0b5;background:transparent;font-size:11px;font-weight:900;letter-spacing:.1em}.secondary:hover{background:var(--ink);color:white;border-color:var(--ink)}.stats-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;margin-top:20px;background:var(--line);border:1px solid var(--line)}.stat{min-height:92px;padding:15px;background:#fff}.stat span{display:block;color:#778077;font-size:10px;font-weight:900;letter-spacing:.14em}.stat strong{display:block;margin-top:9px;font-size:25px;line-height:1}.career-result{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:24px;margin-top:24px}.season-result{padding:22px;background:var(--ink);color:#fff}.season-result .place{font-size:clamp(36px,6vw,62px);color:var(--lime);font-weight:1000;line-height:1}.season-result p{color:#b8c0b8;margin:8px 0 0}.league-table{max-height:350px;overflow:auto;background:#fff;border:1px solid var(--line)}table{border-collapse:collapse;width:100%;font-size:12px}th,td{padding:9px 10px;text-align:left;border-bottom:1px solid #e7eae4}th{position:sticky;top:0;background:#f1f4ec;color:#667066;font-size:10px;letter-spacing:.1em}.user-team{background:#eff6d9;font-weight:900}.history{margin-top:24px;background:#fff;border:1px solid var(--line)}.history h3{font-size:12px;letter-spacing:.14em;padding:15px;margin:0;border-bottom:1px solid var(--line)}.history table td:first-child{font-weight:900}.hidden{display:none!important}.notice{min-height:18px;color:#b83224;font-size:12px;margin-top:8px}
-        footer{padding:25px max(24px,calc((100vw - 1360px)/2));background:var(--ink);color:#aab3aa;display:flex;justify-content:space-between;gap:20px;font-size:11px}footer strong{color:white;letter-spacing:.12em}
-        @media(max-width:900px){.setup-grid{grid-template-columns:minmax(280px,.9fr) minmax(0,1.1fr)}.preview{min-height:530px;padding:16px}.career-photo{width:112px;height:70px}.pitch{height:350px}.stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-        @media(max-width:680px){.topbar{height:58px;padding:0 18px}main{width:calc(100% - 28px);padding-top:24px}.page-heading{align-items:start;flex-direction:column;margin-bottom:18px}.setup-grid{grid-template-columns:minmax(0,1fr);gap:12px}.setup-panel{padding:17px}.preview{grid-row:1;min-height:410px}.pitch{height:280px;width:100%}.career-photo{top:56px;right:14px;width:95px;height:60px}.form-fields{gap:12px}.choice-row{grid-template-columns:repeat(5,minmax(0,1fr))}.choice{font-size:10px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.career-result{grid-template-columns:minmax(0,1fr)}.career-bar{align-items:flex-start;flex-direction:column}.preview-bottom strong{font-size:20px}footer{flex-direction:column;padding:22px 18px}}
-        @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+        :root {
+            --bg: #050505;
+            --fg: #f5f5f5;
+            --gr: #0b1a10;
+            --gf: #1b1d1c;
+            --lime: #c6ff3d;
+            --ac: var(--lime);
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px)
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font: 16px/1.5 "Helvetica Neue", Arial, sans-serif;
+            overflow-x: hidden
+        }
+
+        .cond {
+            font-family: "Arial Narrow", "Franklin Gothic Medium", Impact, sans-serif;
+            font-weight: 900;
+            letter-spacing: -.02em;
+            text-transform: uppercase
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        button,
+        select,
+        input {
+            font: inherit;
+            color: inherit
+        }
+
+        button,
+        select {
+            cursor: pointer
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--lime);
+            outline-offset: 3px
+        }
+
+        #grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 60;
+            opacity: .08;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")
+        }
+
+        .cur {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--lime);
+            position: fixed;
+            z-index: 99;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            display: none
+        }
+
+        @media(pointer:fine) {
+            .cur {
+                display: block
+            }
+        }
+
+        /* nav (identica alla home) */
+        nav {
+            position: fixed;
+            top: env(safe-area-inset-top, 0px);
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 4vw;
+            background: rgba(5, 5, 5, .7);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid #fff1
+        }
+
+        nav b {
+            letter-spacing: .2em;
+            font-size: 14px
+        }
+
+        nav .l {
+            display: flex;
+            gap: 26px;
+            font-size: 12px;
+            letter-spacing: .18em;
+            align-items: center
+        }
+
+        nav .l a:hover {
+            color: var(--lime)
+        }
+
+        #bg {
+            display: none;
+            background: none;
+            border: 0;
+            font-size: 26px
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border: 1px solid #fff5;
+            border-radius: 99px;
+            background: #0006;
+            font-size: 12px;
+            letter-spacing: .2em;
+            font-weight: 700;
+            transition: background .3s, color .3s
+        }
+
+        .btn:hover,
+        .btn.p {
+            background: var(--lime);
+            color: #000;
+            border-color: var(--lime)
+        }
+
+        .btn:disabled {
+            opacity: .35;
+            cursor: not-allowed
+        }
+
+        /* sezioni e titoli (identici alla home) */
+        section {
+            position: relative;
+            padding: 14vh 4vw
+        }
+
+        #top {
+            padding-top: 20vh;
+            padding-bottom: 4vh
+        }
+
+        #create-view,
+        #career-view {
+            padding-top: 4vh
+        }
+
+        .big {
+            font-size: clamp(48px, 11vw, 190px);
+            line-height: .88
+        }
+
+        .big.sm {
+            font-size: clamp(40px, 8vw, 130px)
+        }
+
+        .lab {
+            font-size: 12px;
+            letter-spacing: .4em;
+            color: var(--lime);
+            margin-bottom: 24px
+        }
+
+        .lead {
+            color: #bbb;
+            max-width: 520px;
+            font-size: 18px;
+            margin-top: 28px
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 1s cubic-bezier(.2, .7, .2, 1)
+        }
+
+        .rv.on {
+            opacity: 1;
+            transform: none
+        }
+
+        .w {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(60%);
+            filter: blur(8px);
+            transition: .9s cubic-bezier(.2, .7, .2, 1)
+        }
+
+        .on .w {
+            opacity: 1;
+            transform: none;
+            filter: none
+        }
+
+        .hidden {
+            display: none !important
+        }
+
+        /* creazione giocatore */
+        .setup {
+            display: grid;
+            grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+            gap: 24px;
+            align-items: stretch
+        }
+
+        .panel {
+            padding: clamp(20px, 3vw, 36px);
+            border-radius: 10px;
+            border: 1px solid #fff1;
+            background: linear-gradient(160deg, #10201a, #070a08 70%)
+        }
+
+        .panel h3 {
+            font-size: clamp(28px, 3.4vw, 46px);
+            line-height: .95;
+            margin: 6px 0 24px
+        }
+
+        .fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 0
+        }
+
+        .field.wide {
+            grid-column: 1/-1
+        }
+
+        .field label,
+        .flabel {
+            font-size: 11px;
+            letter-spacing: .2em;
+            color: #888
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: #111;
+            border: 1px solid #fff3;
+            padding: 11px 12px;
+            border-radius: 8px
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--lime);
+            outline: 0
+        }
+
+        option {
+            background: #111
+        }
+
+        .pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .pill {
+            padding: 10px 18px;
+            border-radius: 99px;
+            border: 1px solid #fff3;
+            background: 0;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .14em;
+            transition: .3s
+        }
+
+        .pill:hover {
+            border-color: var(--lime)
+        }
+
+        .pill[aria-pressed=true] {
+            background: var(--lime);
+            border-color: var(--lime);
+            color: #000
+        }
+
+        .notice {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #ff4d6a;
+            font-size: 13px
+        }
+
+        .note {
+            margin-top: 14px;
+            color: #777;
+            font-size: 12px
+        }
+
+        /* anteprima campo */
+        .preview {
+            position: relative;
+            overflow: hidden;
+            min-height: 560px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: clamp(18px, 2.5vw, 32px);
+            border-radius: 10px;
+            border: 1px solid #fff1;
+            background: radial-gradient(ellipse at 50% 100%, #12351f, transparent 60%), linear-gradient(#08110b, #0b1a10);
+            box-shadow: inset 0 3px 0 var(--pc, var(--lime))
+        }
+
+        .preview:after {
+            content: "26/27";
+            position: absolute;
+            right: 6%;
+            bottom: 0;
+            font: 900 clamp(60px, 12vw, 200px)/1 Impact, sans-serif;
+            color: #ffffff10;
+            pointer-events: none
+        }
+
+        .pv-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 11px;
+            letter-spacing: .3em;
+            color: var(--lime);
+            position: relative;
+            z-index: 1
+        }
+
+        .pv-top span:last-child {
+            color: #9aa39b
+        }
+
+        .pitch {
+            position: relative;
+            z-index: 1;
+            width: min(100%, 520px);
+            height: min(380px, 78vw);
+            margin: 18px auto;
+            padding: 12px 4%;
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            border: 1px solid #ffffff30;
+            border-radius: 8px;
+            background: linear-gradient(90deg, transparent calc(50% - 1px), #ffffff22 calc(50% - 1px), #ffffff22 calc(50% + 1px), transparent calc(50% + 1px)) center/100% 100% no-repeat
+        }
+
+        .pitch:before {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            left: calc(50% - 45px);
+            top: calc(50% - 45px);
+            border: 1px solid #ffffff30;
+            border-radius: 50%
+        }
+
+        .prow {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 4px;
+            position: relative
+        }
+
+        .avatar {
+            display: grid;
+            place-items: center;
+            width: clamp(36px, 5vw, 52px);
+            height: clamp(36px, 5vw, 52px);
+            border-radius: 50%;
+            border: 1px solid #fff5;
+            background: #0b1a10;
+            color: #cfd8d1;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            transition: .4s
+        }
+
+        .avatar.me {
+            width: clamp(46px, 6.5vw, 64px);
+            height: clamp(46px, 6.5vw, 64px);
+            background: var(--lime);
+            border-color: var(--lime);
+            color: #000;
+            font-size: 18px;
+            font-weight: 900;
+            box-shadow: 0 0 0 7px #c6ff3d2e
+        }
+
+        .pv-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 16px;
+            position: relative;
+            z-index: 1
+        }
+
+        .pv-bottom h4 {
+            font-size: clamp(26px, 3.4vw, 46px);
+            line-height: .95;
+            overflow-wrap: anywhere
+        }
+
+        .pv-bottom small {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            letter-spacing: .2em;
+            color: #aab3aa
+        }
+
+        .ovr {
+            text-align: right
+        }
+
+        .ovr b {
+            display: block;
+            font-size: clamp(44px, 6vw, 80px);
+            line-height: .9;
+            color: var(--lime)
+        }
+
+        /* carriera in corso */
+        .bar {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 26px 0 10px
+        }
+
+        .sub {
+            margin-top: 18px;
+            font-size: 12px;
+            letter-spacing: .25em;
+            color: #9aa39b
+        }
+
+        .msg {
+            min-height: 22px;
+            margin: 6px 0 0;
+            font-size: 13px;
+            letter-spacing: .1em;
+            color: var(--lime)
+        }
+
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 1px;
+            margin: 24px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #fff1;
+            background: #fff1;
+            box-shadow: inset 0 3px 0 var(--pc, var(--lime))
+        }
+
+        .kpi {
+            padding: 22px 18px;
+            background: #0a0d0b
+        }
+
+        .kpi small {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .2em;
+            color: #888
+        }
+
+        .kpi strong {
+            display: block;
+            margin-top: 8px;
+            font-size: clamp(26px, 3.6vw, 48px);
+            line-height: 1;
+            color: var(--lime)
+        }
+
+        .sres {
+            display: grid;
+            grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+            gap: 24px;
+            margin: 30px 0;
+            align-items: start
+        }
+
+        .sres.single {
+            grid-template-columns: minmax(0, 1fr)
+        }
+
+        .sbox {
+            padding: clamp(22px, 3vw, 36px);
+            border-radius: 10px;
+            background: linear-gradient(160deg, #1b3d22, #050505)
+        }
+
+        .sbox .lab {
+            margin-bottom: 14px
+        }
+
+        .sbox .place {
+            font-size: clamp(54px, 9vw, 130px);
+            line-height: .9;
+            color: var(--lime)
+        }
+
+        .sbox p {
+            margin-top: 12px;
+            color: #c9d1ca
+        }
+
+        .block-title {
+            font-size: 12px;
+            letter-spacing: .4em;
+            color: var(--lime);
+            margin: 38px 0 14px
+        }
+
+        /* tabelle (come la classifica) */
+        .tw {
+            overflow: auto;
+            max-height: 430px;
+            border-radius: 10px;
+            border: 1px solid #fff1
+        }
+
+        .tw.free {
+            max-height: none
+        }
+
+        .tw table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px
+        }
+
+        .tw th {
+            position: sticky;
+            top: 0;
+            background: #0a0d0b;
+            font-size: 11px;
+            letter-spacing: .2em;
+            color: #888;
+            text-align: right;
+            padding: 10px 8px
+        }
+
+        .tw td {
+            padding: 11px 8px;
+            text-align: right;
+            border-bottom: 1px solid #fff1
+        }
+
+        .tw tr {
+            transition: background .3s
+        }
+
+        .tw tr:hover {
+            background: #ffffff0a
+        }
+
+        .tw tr.me {
+            background: #c6ff3d1a;
+            font-weight: 900
+        }
+
+        .tw td:first-child,
+        .tw th:first-child {
+            text-align: left;
+            padding-left: 12px
+        }
+
+        .tw td:first-child {
+            border-left: 4px solid var(--z, transparent)
+        }
+
+        .tw .l {
+            text-align: left
+        }
+
+        .tw td.pt {
+            font-weight: 900;
+            color: var(--lime);
+            font-size: 18px
+        }
+
+        .lg {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 14px
+        }
+
+        .lg i {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            margin-right: 6px
+        }
+
+        /* footer (identico alla home) */
+        footer {
+            padding: 14vh 4vw 6vh;
+            border-top: 1px solid #fff2;
+            background: #000
+        }
+
+        footer .big {
+            font-size: clamp(70px, 20vw, 340px)
+        }
+
+        .fl {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            font-size: 13px;
+            letter-spacing: .2em
+        }
+
+        .fl a:hover {
+            color: var(--lime)
+        }
+
+        footer small {
+            color: #777;
+            display: block;
+            max-width: 760px
+        }
+
+        @media(max-width:900px) {
+            #bg {
+                display: block
+            }
+
+            nav .l {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+                padding: 22px 4vw;
+                background: rgba(5, 5, 5, .96);
+                border-bottom: 1px solid #fff1
+            }
+
+            nav.m .l {
+                display: flex
+            }
+
+            .cur {
+                display: none !important
+            }
+
+            .setup,
+            .sres {
+                grid-template-columns: minmax(0, 1fr)
+            }
+
+            .kpis {
+                grid-template-columns: repeat(3, minmax(0, 1fr))
+            }
+        }
+
+        @media(max-width:480px) {
+            .fields {
+                grid-template-columns: minmax(0, 1fr)
+            }
+
+            .kpis {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
+
+            .tw table {
+                font-size: 13px
+            }
+
+            .tw td.pt {
+                font-size: 15px
+            }
+
+            .preview {
+                min-height: 500px
+            }
+
+            .btn {
+                padding: 12px 20px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+
+            .rv,
+            .w {
+                opacity: 1;
+                transform: none;
+                filter: none
+            }
+        }
     </style>
 </head>
+
 <body>
-    <nav class="topbar" aria-label="Navigazione">
-        <a class="brand" href="index.html"><span class="brand-mark">SA</span><span>SERIE A · 26/27</span></a>
-        <a href="index.html">← TORNA AL CAMPIONATO</a>
+    <div id="grain"></div>
+    <div class="cur" id="cur"></div>
+
+    <nav id="nav"><a href="index.html"><b class="cond">SERIE A 26/27</b></a>
+        <div class="l"><a href="index.html#intro">CAMPIONATO</a><a href="index.html#teams">SQUADRE</a><a
+                href="index.html#cal">CALENDARIO</a><a href="index.html#tab">CLASSIFICA</a><a
+                href="index.html#stadi">STADI</a><a href="index.html#stats">STATISTICHE</a><a
+                href="index.html#bet">SCOMMESSE</a><a class="btn mag" href="index.html#mc">MATCH CENTER</a><a
+                class="btn mag" href="index.html#forma">CREA SQUADRA</a><a class="btn p mag"
+                href="carriera.html">CARRIERA GIOCATORE</a></div>
+        <button id="bg" aria-label="Menu">☰</button>
     </nav>
-    <main>
-        <div class="page-heading"><div><div class="eyebrow">Modalità carriera · Italia</div><h1>IL TUO PERCORSO</h1><p>Crea il tuo giocatore e scrivi la sua storia in Serie A.</p></div><div class="season-tag">STAGIONE 2026 / 27</div></div>
-        <section id="create-view" class="setup-grid" aria-label="Crea giocatore">
-            <form class="setup-panel" id="player-form">
-                <div class="eyebrow">01 / IDENTITÀ</div><h2>Registra il tuo giocatore</h2>
-                <div class="form-fields">
-                    <div class="field wide"><label for="player-name">Nome sulla maglia</label><input id="player-name" name="name" maxlength="18" placeholder="Es. A. Rossi" required></div>
-                    <div class="field"><label for="shirt-number">Numero</label><input id="shirt-number" name="number" type="number" min="1" max="99" value="10" required></div>
-                    <div class="field"><label for="player-age">Età iniziale</label><input id="player-age" name="age" type="number" min="16" max="20" value="18" required></div>
-                    <div class="field"><label for="nationality">Nazionalità</label><select id="nationality"><option>Italia</option><option>Argentina</option><option>Brasile</option><option>Francia</option><option>Germania</option><option>Inghilterra</option><option>Marocco</option><option>Paesi Bassi</option><option>Portogallo</option><option>Spagna</option><option>Altra</option></select></div>
-                    <div class="field"><label for="club-choice">Club vivaio</label><select id="club-choice"></select></div>
-                    <div class="field wide"><span class="field-label">Ruolo</span><div class="choice-row" id="positions" role="group" aria-label="Ruolo"></div></div>
-                    <div class="field wide"><span class="field-label">Piede preferito</span><div class="choice-row" id="feet"><button class="choice foot" type="button" data-foot="Sinistro" aria-pressed="false">SINISTRO</button><button class="choice foot" type="button" data-foot="Destro" aria-pressed="true">DESTRO</button></div></div>
-                    <div class="field wide"><button class="primary" type="submit"><span>CREA IL GIOCATORE</span><span aria-hidden="true">→</span></button><div class="notice" id="form-notice" role="alert"></div></div>
+
+    <section id="top">
+        <div class="lab">MODALITÀ CARRIERA · ITALIA</div>
+        <h2 class="big sm cond rv" data-w>Il Tuo<br><span style="color:var(--lime)">Percorso</span></h2>
+        <p class="lead rv">Crea il tuo giocatore e scrivi la sua storia in Serie A: dal vivaio alla prima stagione da
+            protagonista.</p>
+    </section>
+
+    <section id="create-view">
+        <div class="setup">
+            <form class="panel rv" id="player-form">
+                <div class="lab">01 / IDENTITÀ</div>
+                <h3 class="cond">Registra il tuo giocatore</h3>
+                <div class="fields">
+                    <div class="field wide"><label for="player-name">NOME SULLA MAGLIA</label><input id="player-name"
+                            name="name" maxlength="18" placeholder="Es. A. Rossi" required></div>
+                    <div class="field"><label for="shirt-number">NUMERO</label><input id="shirt-number" name="number"
+                            type="number" min="1" max="99" value="10" required></div>
+                    <div class="field"><label for="player-age">ETÀ INIZIALE</label><input id="player-age" name="age"
+                            type="number" min="16" max="20" value="18" required></div>
+                    <div class="field"><label for="nationality">NAZIONALITÀ</label><select id="nationality">
+                            <option>Italia</option>
+                            <option>Argentina</option>
+                            <option>Brasile</option>
+                            <option>Francia</option>
+                            <option>Germania</option>
+                            <option>Inghilterra</option>
+                            <option>Marocco</option>
+                            <option>Paesi Bassi</option>
+                            <option>Portogallo</option>
+                            <option>Spagna</option>
+                            <option>Altra</option>
+                        </select></div>
+                    <div class="field"><label for="club-choice">CLUB VIVAIO</label><select id="club-choice"></select>
+                    </div>
+                    <div class="field wide"><span class="flabel">RUOLO</span>
+                        <div class="pills" id="positions" role="group" aria-label="Ruolo"></div>
+                    </div>
+                    <div class="field wide"><span class="flabel">PIEDE PREFERITO</span>
+                        <div class="pills" id="feet" role="group" aria-label="Piede preferito"><button class="pill"
+                                type="button" data-foot="Sinistro" aria-pressed="false">SINISTRO</button><button
+                                class="pill" type="button" data-foot="Destro" aria-pressed="true">DESTRO</button></div>
+                    </div>
+                    <div class="field wide"><button class="btn p mag" type="submit">CREA IL GIOCATORE →</button>
+                        <div class="notice" id="form-notice" role="alert"></div>
+                    </div>
                 </div>
-                <p class="form-note">Carriera simulata localmente. Nessun account richiesto.</p>
+                <p class="note">Carriera simulata localmente. Nessun account richiesto.</p>
             </form>
-            <section class="preview" aria-label="Anteprima del campo">
-                <img class="career-photo" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=360&q=70" alt="Campo da calcio">
-                <div class="preview-top"><b>FORMAZIONE · 4-3-3</b><span>ANTEPRIMA GIOCATORE</span></div>
-                <div class="pitch" aria-hidden="true"><div class="pitch-row"><span class="avatar">AS</span><span class="avatar">PC</span><span class="avatar">AD</span></div><div class="pitch-row"><span class="avatar">ES</span><span class="avatar">CC</span><span class="avatar">CC</span><span class="avatar">ED</span></div><div class="pitch-row"><span class="avatar">TS</span><span class="avatar">DC</span><span class="avatar">DC</span><span class="avatar">TD</span></div><div class="pitch-row"><span class="avatar">POR</span></div></div>
-                <div class="preview-bottom"><div><strong id="preview-name">NUOVO TALENTO</strong><small><span id="preview-role">ATTACCANTE</span> · <span id="preview-club">SCEGLI IL CLUB</span></small></div><div class="rating-preview"><b id="preview-rating">--</b><small>OVR INIZIALE</small></div></div>
-            </section>
-        </section>
-        <section id="career-view" class="career-panel hidden" aria-live="polite">
-            <div class="career-bar"><div><div class="eyebrow">CARRIERA IN CORSO</div><h2 id="career-title"></h2></div><div class="career-actions"><button class="secondary" id="play-season">SIMULA LA STAGIONE →</button><button class="secondary" id="transfer-button">VALUTA TRASFERIMENTO</button><button class="secondary" id="new-career">NUOVA CARRIERA</button></div></div>
-            <div class="stats-grid" id="career-stats"></div>
-            <div class="career-result hidden" id="season-result"></div>
-            <div class="history hidden" id="career-history"><h3>STAGIONI GIOCATE</h3><div class="table-wrap"><table><thead><tr><th>ANNO</th><th>ETÀ</th><th>CLUB</th><th>PG</th><th>GOL</th><th>ASS</th><th>POS.</th><th>PT</th></tr></thead><tbody id="history-body"></tbody></table></div></div>
-        </section>
-    </main>
-    <footer><strong>SERIE A · 26/27</strong><span>Simulatore indipendente, risultati generati per il gioco.</span><a href="index.html">← CAMPIONATO</a></footer>
+
+            <aside class="preview rv" aria-label="Anteprima del campo">
+                <div class="pv-top"><span>FORMAZIONE · 4-3-3</span><span>ANTEPRIMA GIOCATORE</span></div>
+                <div class="pitch" id="pitch" aria-hidden="true"></div>
+                <div class="pv-bottom">
+                    <div>
+                        <h4 class="cond" id="preview-name">NUOVO TALENTO</h4>
+                        <small><span id="preview-role">ATTACCANTE</span> · <span id="preview-club">SCEGLI IL CLUB</span></small>
+                    </div>
+                    <div class="ovr"><b class="cond" id="preview-rating">--</b><small>OVR INIZIALE</small></div>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section id="career-view" class="hidden" aria-live="polite">
+        <div class="lab">CARRIERA IN CORSO</div>
+        <h2 class="big sm cond" id="career-name"></h2>
+        <div class="sub" id="career-sub"></div>
+        <div class="bar">
+            <button class="btn p mag" id="play-season">SIMULA LA STAGIONE →</button>
+            <button class="btn mag" id="transfer-button">VALUTA TRASFERIMENTO</button>
+            <button class="btn mag" id="new-career">NUOVA CARRIERA</button>
+        </div>
+        <div class="msg" id="career-msg"></div>
+        <div class="kpis" id="career-stats"></div>
+
+        <div class="sres hidden" id="season-result"></div>
+
+        <div id="career-history" class="hidden">
+            <div class="block-title">STAGIONI GIOCATE</div>
+            <div class="tw free">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ANNO</th>
+                            <th>ETÀ</th>
+                            <th class="l">CLUB</th>
+                            <th>PG</th>
+                            <th>GOL</th>
+                            <th>ASS</th>
+                            <th>POS.</th>
+                            <th>PT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="big cond">Serie A<br>26 / 27</div>
+        <div class="cond" style="font-size:28px;color:var(--lime)">THE NEXT CHAPTER</div>
+        <div class="fl"><a href="index.html#intro">CAMPIONATO</a><a href="index.html#teams">SQUADRE</a><a
+                href="index.html#cal">CALENDARIO</a><a href="index.html#tab">CLASSIFICA</a><a
+                href="index.html#mc">MATCH CENTER</a><a href="index.html#stats">STATISTICHE</a><a
+                href="index.html#stadi">STADI</a><a href="index.html#bet">SCOMMESSE</a></div>
+        <small>© 2026 — Progetto concettuale indipendente, non ufficiale. Marchi e nomi dei club appartengono ai
+            rispettivi titolari. La carriera è un simulatore: i risultati sono generati per il gioco e salvati solo
+            nel tuo browser.</small>
+    </footer>
+
     <script>
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
         const clubs = [
-            ['Atalanta', 7], ['Bologna', 5], ['Cagliari', 2], ['Como', 3], ['Frosinone', 2], ['Fiorentina', 4], ['Genoa', 3], ['Inter', 9], ['Juventus', 9], ['Lazio', 6], ['Lecce', 2], ['Milan', 8], ['Napoli', 8], ['Parma', 3], ['Monza', 2], ['Roma', 6], ['Sassuolo', 3], ['Torino', 3], ['Udinese', 3], ['Venezia', 1]
+            ['Atalanta', 7, '#1e71b8'], ['Bologna', 5, '#a8192e'], ['Cagliari', 2, '#a41e35'], ['Como', 3, '#1b5aa7'], ['Frosinone', 2, '#f2c500'], ['Fiorentina', 4, '#6a2f9e'], ['Genoa', 3, '#a31c2c'], ['Inter', 9, '#0a3a8a'], ['Juventus', 9, '#e9e9e9'], ['Lazio', 6, '#87c5ec'], ['Lecce', 2, '#f2c500'], ['Milan', 8, '#c8102e'], ['Napoli', 8, '#12a0d7'], ['Parma', 3, '#f2c500'], ['Monza', 2, '#c8102e'], ['Roma', 6, '#8e1f2f'], ['Sassuolo', 3, '#0a8a4a'], ['Torino', 3, '#7a1f1f'], ['Udinese', 3, '#cfcfcf'], ['Venezia', 1, '#0a7a4a']
         ];
         const roles = [
             ['POR', 'Portiere', 0.01, 0.03], ['DC', 'Difensore', 0.04, 0.07], ['TS', 'Terzino sinistro', 0.04, 0.12], ['TD', 'Terzino destro', 0.04, 0.12], ['CC', 'Centrocampista', 0.10, 0.19], ['TRQ', 'Trequartista', 0.16, 0.23], ['AS', 'Ala sinistra', 0.22, 0.20], ['AD', 'Ala destra', 0.22, 0.20], ['ATT', 'Attaccante', 0.34, 0.13]
         ];
-        const $ = selector => document.querySelector(selector);
+        const layout = [['AS', 'ATT', 'AD'], ['CC', 'TRQ', 'CC'], ['TS', 'DC', 'DC', 'TD'], ['POR']];
+        const zone = k => k < 4 ? '#3dff9a' : k < 6 ? '#ff9a3d' : k == 6 ? '#3dc6ff' : k > 16 ? '#ff4d6a' : 'transparent';
         let selectedRole = 'ATT';
         let selectedFoot = 'Destro';
         let player = null;
@@ -73,27 +894,38 @@
         let latestLeague = null;
         const clubSelect = $('#club-choice');
         clubSelect.innerHTML = clubs.map(([name, strength], index) => `<option value="${index}">${name} · ${strength}/9</option>`).join('');
-        $('#positions').innerHTML = roles.map(([code, name], index) => `<button class="choice" type="button" data-role="${code}" aria-pressed="${index === 8}">${code}</button>`).join('');
+        $('#positions').innerHTML = roles.map(([code, name], index) => `<button class="pill" type="button" data-role="${code}" title="${name}" aria-label="${name}" aria-pressed="${index === 8}">${code}</button>`).join('');
         $('#positions').addEventListener('click', event => {
             const button = event.target.closest('[data-role]');
             if (!button) return;
             selectedRole = button.dataset.role;
-            document.querySelectorAll('#positions .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+            document.querySelectorAll('#positions .pill').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
             updatePreview();
         });
         $('#feet').addEventListener('click', event => {
             const button = event.target.closest('[data-foot]');
             if (!button) return;
             selectedFoot = button.dataset.foot;
-            document.querySelectorAll('#feet .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
+            document.querySelectorAll('#feet .pill').forEach(choice => choice.setAttribute('aria-pressed', String(choice === button)));
         });
         $('#player-name').addEventListener('input', updatePreview);
+        $('#shirt-number').addEventListener('input', updatePreview);
         clubSelect.addEventListener('change', updatePreview);
+        function drawPitch() {
+            let used = false;
+            $('#pitch').innerHTML = layout.map(row => `<div class="prow">${row.map(code => {
+                const me = !used && code === selectedRole; if (me) used = true;
+                return `<span class="avatar${me ? ' me' : ''}">${me ? ($('#shirt-number').value || '•') : code}</span>`;
+            }).join('')}</div>`).join('');
+        }
         function updatePreview() {
             const role = roles.find(item => item[0] === selectedRole);
+            const club = clubs[Number(clubSelect.value)];
             $('#preview-name').textContent = ($('#player-name').value.trim() || 'NUOVO TALENTO').toUpperCase();
             $('#preview-role').textContent = role[1].toUpperCase();
-            $('#preview-club').textContent = clubs[Number(clubSelect.value)][0].toUpperCase();
+            $('#preview-club').textContent = club[0].toUpperCase();
+            $('.preview').style.setProperty('--pc', club[2]);
+            drawPitch();
         }
         function randomFrom(seed) {
             let value = seed >>> 0;
@@ -139,14 +971,22 @@
             return table.sort((a, b) => b.points - a.points || (b.gf - b.ga) - (a.gf - a.ga) || b.gf - a.gf);
         }
         function renderCareer() {
-            $('#career-title').textContent = `${player.name} · ${player.age} ANNI · ${currentClub.name.toUpperCase()}`;
+            $('#career-name').textContent = player.name;
+            $('#career-sub').textContent = `${player.age} ANNI · ${currentClub.name.toUpperCase()} · N°${player.number} · ${player.nationality.toUpperCase()}`;
+            $('#career-view').style.setProperty('--pc', clubs[currentClub.id][2]);
             $('#career-stats').innerHTML = [
-                ['RUOLO', roles.find(role => role[0] === player.role)[0]], ['OVR', player.overall], ['POTENZIALE', player.potential], ['PIEDE', player.foot.toUpperCase()], ['STAGIONI', seasonNumber]
-            ].map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`).join('');
+                ['RUOLO', player.role], ['OVR', player.overall], ['POTENZIALE', player.potential], ['PIEDE', player.foot.toUpperCase()], ['STAGIONI', seasonNumber]
+            ].map(([label, value]) => `<div class="kpi"><small>${label}</small><strong class="cond">${value}</strong></div>`).join('');
             $('#play-season').disabled = player.age >= 38;
             $('#play-season').textContent = player.age >= 38 ? 'CARRIERA CONCLUSA' : 'SIMULA LA STAGIONE →';
-            $('#history-body').innerHTML = careerHistory.map(row => `<tr><td>${row.year}</td><td>${row.age}</td><td>${row.club}</td><td>${row.apps}</td><td>${row.goals}</td><td>${row.assists}</td><td>${row.place}°</td><td>${row.points}</td></tr>`).join('');
+            $('#history-body').innerHTML = careerHistory.map(row => `<tr><td>${row.year}</td><td>${row.age}</td><td class="l">${row.club}</td><td>${row.apps}</td><td>${row.goals}</td><td>${row.assists}</td><td>${row.place}°</td><td class="pt">${row.points}</td></tr>`).join('');
             $('#career-history').classList.toggle('hidden', careerHistory.length === 0);
+        }
+        function showResult(html, single) {
+            const box = $('#season-result');
+            box.innerHTML = html;
+            box.classList.toggle('single', !!single);
+            box.classList.remove('hidden');
         }
         $('#player-form').addEventListener('submit', event => {
             event.preventDefault();
@@ -156,12 +996,14 @@
             const age = Number(form.get('age'));
             const role = roles.find(item => item[0] === selectedRole);
             if (!name || number < 1 || number > 99 || age < 16 || age > 20) { $('#form-notice').textContent = 'Controlla nome, numero e età.'; return; }
+            $('#form-notice').textContent = '';
             const clubId = Number(clubSelect.value);
             const random = randomFrom(Date.now() ^ name.length * 8191 ^ clubId * 7919);
             player = { name, number, age, role: selectedRole, foot: selectedFoot, nationality: $('#nationality').value, overall: Math.round(55 + random() * 17 + (role[0] === 'ATT' ? 2 : 0)), potential: Math.round(77 + random() * 19) };
             currentClub = { id: clubId, name: clubs[clubId][0] };
             $('#preview-rating').textContent = player.overall;
             $('#season-result').classList.add('hidden');
+            $('#career-msg').textContent = '';
             $('#create-view').classList.add('hidden');
             $('#career-view').classList.remove('hidden');
             renderCareer();
@@ -170,6 +1012,7 @@
         $('#play-season').addEventListener('click', () => {
             if (!player || player.age >= 38) return;
             seasonNumber++;
+            $('#career-msg').textContent = '';
             const seed = Math.round(Date.now() % 2147483647) ^ player.number * 331 ^ seasonNumber * 49157 ^ player.overall * 97;
             const random = randomFrom(seed);
             const role = roles.find(item => item[0] === player.role);
@@ -184,31 +1027,48 @@
             if (player.age <= 28) player.overall = Math.min(player.potential, player.overall + Math.round(random() * 3));
             else if (player.age >= 33) player.overall = Math.max(45, player.overall - Math.round(random() * 2));
             const trophy = standing === 1 ? 'CAMPIONE D’ITALIA' : standing <= 4 ? 'QUALIFICAZIONE CHAMPIONS' : 'STAGIONE COMPLETATA';
-            $('#season-result').innerHTML = `<div class="season-result"><div class="eyebrow">${careerHistory[0].year} / ${careerHistory[0].year + 1}</div><div class="place">${standing}° POSTO</div><p>${userTeam.points} punti · ${trophy}</p><p>${apps} presenze · ${goals} gol · ${assists} assist</p></div><div class="league-table"><table><thead><tr><th>POS</th><th>CLUB</th><th>PG</th><th>DR</th><th>PT</th></tr></thead><tbody>${latestLeague.map((team, index) => `<tr class="${team.id === currentClub.id ? 'user-team' : ''}"><td>${index + 1}</td><td>${team.name}</td><td>${team.played}</td><td>${team.gf - team.ga}</td><td>${team.points}</td></tr>`).join('')}</tbody></table></div>`;
-            $('#season-result').classList.remove('hidden');
+            const year = careerHistory[0].year;
+            showResult(`<div class="sbox"><div class="lab">${year} / ${year + 1}</div><div class="place cond">${standing}° POSTO</div><p>${userTeam.points} punti · ${trophy}</p><p>${apps} presenze · ${goals} gol · ${assists} assist</p></div>
+                <div><div class="tw"><table><thead><tr><th>POS</th><th class="l">CLUB</th><th>PG</th><th>DR</th><th>PT</th></tr></thead><tbody>${latestLeague.map((team, index) => `<tr class="${team.id === currentClub.id ? 'me' : ''}" style="--z:${zone(index)}"><td>${index + 1}</td><td class="l cond" style="font-size:18px">${team.name}</td><td>${team.played}</td><td>${team.gf - team.ga}</td><td class="pt">${team.points}</td></tr>`).join('')}</tbody></table></div>
+                <div class="lg"><span><i style="background:#3dff9a"></i>Champions League</span><span><i style="background:#ff9a3d"></i>Europa League</span><span><i style="background:#3dc6ff"></i>Conference League</span><span><i style="background:#ff4d6a"></i>Retrocessione</span></div></div>`);
             renderCareer();
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            $('#season-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
         $('#transfer-button').addEventListener('click', () => {
-            if (!player || !careerHistory.length) { $('#career-title').textContent = `${player.name} · COMPLETA UNA STAGIONE PER RICEVERE OFFERTE`; return; }
+            const msg = $('#career-msg');
+            if (!player || !careerHistory.length) { msg.textContent = 'COMPLETA UNA STAGIONE PER RICEVERE OFFERTE'; return; }
             const threshold = Math.max(3, Math.min(9, Math.round((player.overall - 54) / 4)));
             const offers = clubs.map((club, id) => ({ id, name: club[0], strength: club[1] })).filter(club => club.id !== currentClub.id && club.strength <= threshold).sort((a, b) => Math.abs(b.strength - threshold) - Math.abs(a.strength - threshold));
-            if (!offers.length) { $('#career-title').textContent = `${player.name} · NESSUNA OFFERTA DISPONIBILE`; return; }
+            if (!offers.length) { msg.textContent = 'NESSUNA OFFERTA DISPONIBILE'; return; }
             const offer = offers[Math.floor(Math.random() * Math.min(3, offers.length))];
             currentClub = offer;
-            $('#season-result').classList.remove('hidden');
-            $('#season-result').innerHTML = `<div class="season-result"><div class="eyebrow">NUOVA FIRMA</div><div class="place">${offer.name.toUpperCase()}</div><p>${player.name} passa al nuovo club per la prossima stagione.</p></div>`;
+            msg.textContent = '';
+            showResult(`<div class="sbox"><div class="lab">NUOVA FIRMA</div><div class="place cond">${offer.name.toUpperCase()}</div><p>${player.name} passa al nuovo club per la prossima stagione.</p></div>`, true);
             renderCareer();
         });
         $('#new-career').addEventListener('click', () => {
             player = null; currentClub = null; seasonNumber = 0; careerHistory = []; latestLeague = null;
-            $('#season-result').classList.add('hidden'); $('#preview-rating').textContent = '--'; $('#form-notice').textContent = '';
+            $('#season-result').classList.add('hidden'); $('#preview-rating').textContent = '--'; $('#form-notice').textContent = ''; $('#career-msg').textContent = '';
             $('#player-form').reset(); selectedRole = 'ATT'; selectedFoot = 'Destro';
-            document.querySelectorAll('#positions .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.role === 'ATT')));
-            document.querySelectorAll('#feet .choice').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.foot === selectedFoot)));
+            document.querySelectorAll('#positions .pill').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.role === 'ATT')));
+            document.querySelectorAll('#feet .pill').forEach(choice => choice.setAttribute('aria-pressed', String(choice.dataset.foot === selectedFoot)));
             updatePreview(); $('#career-view').classList.add('hidden'); $('#create-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
+
+        /* effetti del sito: titoli a parole, reveal, menu, cursore, bottoni magnetici */
+        $$('[data-w]').forEach(h => { const walk = n => [...n.childNodes].forEach(c => { if (c.nodeType == 3) { const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach((w, i) => { if (!w.trim()) return f.append(w); const s = document.createElement('span'); s.className = 'w'; s.textContent = w; s.style.transitionDelay = (i * .06) + 's'; f.append(s) }); c.replaceWith(f) } else walk(c) }); walk(h) });
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; e.target.classList.add('on'); io.unobserve(e.target) }), { threshold: .2 });
+            $$('.rv').forEach(e => io.observe(e));
+        } else $$('.rv').forEach(e => e.classList.add('on'));
+        $('#bg').onclick = () => $('#nav').classList.toggle('m');
+        $$('#nav a').forEach(a => a.addEventListener('click', () => $('#nav').classList.remove('m')));
+        const cu = $('#cur'); addEventListener('pointermove', e => { cu.style.transform = `translate(${e.clientX - 7}px,${e.clientY - 7}px)` });
+        $$('.mag').forEach(b => { b.onmousemove = e => { const r = b.getBoundingClientRect(); b.style.transform = `translate(${(e.clientX - r.x - r.width / 2) * .25}px,${(e.clientY - r.y - r.height / 2) * .4}px)` }; b.onmouseleave = () => b.style.transform = '' });
+
         updatePreview();
     </script>
 </body>
+
 </html>
