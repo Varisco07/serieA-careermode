@@ -77,11 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const league = T.map((team, index) => ({
                     id: index,
                     name: team[0],
-                    strength: team[5],
-                    rating: 55 + team[5] * 4,
-                    attack: team[5],
-                    midfield: team[5],
-                    defence: team[5],
+                    strength: toStrength(getClubOverall(index)),
+                    rating: getClubOverall(index),
+                    attack: toStrength(getClubOverall(index)),
+                    midfield: toStrength(getClubOverall(index)),
+                    defence: toStrength(getClubOverall(index)),
                     played: 0,
                     wins: 0,
                     draws: 0,
@@ -101,19 +101,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const defence = toStrength(averageForRoles(['cb', 'lb', 'rb', 'gk']));
                 const gkOverall = averageForRoles(['gk']);
                 const defendersOverall = averageForRoles(['cb', 'lb', 'rb']);
-                const clubCounts = userPlayers.reduce((counts, player) => {
-                    counts[player.club] = (counts[player.club] || 0) + 1;
-                    return counts;
-                }, {});
-                const chemistry = clamp((Math.max(...Object.values(clubCounts)) - 1) * 0.04, 0, 0.16);
                 league[replacement] = {
                     id: userTeamId,
                     name: userTeamName,
-                    strength: toStrength(overall) + chemistry + 0.8,
+                    strength: toStrength(overall) + 0.8,
                     rating: overall,
-                    attack: attack + chemistry + 0.8,
-                    midfield: midfield + chemistry + 0.75,
-                    defence: defence + chemistry + 0.75 + Math.max(0, gkOverall - defendersOverall) * 0.012,
+                    attack: attack + 0.8,
+                    midfield: midfield + 0.75,
+                    defence: defence + 0.75 + Math.max(0, gkOverall - defendersOverall) * 0.012,
                     played: 0,
                     wins: 0,
                     draws: 0,
@@ -249,10 +244,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const awayAttack = away.attack + awayTactic.attack + awayForm;
                     const homeDefence = home.defence + homeTactic.defence + homeForm * 0.65;
                     const awayDefence = away.defence + awayTactic.defence + awayForm * 0.65;
-                    const homeRatingEdge = (home.rating - away.rating) * 0.012;
-                    const awayRatingEdge = (away.rating - home.rating) * 0.012;
-                    const homeXg = clamp(1.3 + (homeAttack - awayDefence) * 0.16 + homeRatingEdge + 0.17 + (home.isUser ? 0.18 : 0) - (away.isUser ? 0.12 : 0), 0.18, 3.6);
-                    const awayXg = clamp(1.08 + (awayAttack - homeDefence) * 0.16 + awayRatingEdge + (away.isUser ? 0.18 : 0) - (home.isUser ? 0.12 : 0), 0.18, 3.4);
+                    const homeRatingEdge = clamp((home.rating - away.rating) * 0.03, -0.8, 0.8);
+                    const awayRatingEdge = clamp((away.rating - home.rating) * 0.03, -0.8, 0.8);
+                    const homeXg = clamp(1.3 + (homeAttack - awayDefence) * 0.18 + homeRatingEdge + 0.17 + (home.isUser ? 0.18 : 0) - (away.isUser ? 0.12 : 0), 0.18, 3.6);
+                    const awayXg = clamp(1.08 + (awayAttack - homeDefence) * 0.18 + awayRatingEdge + (away.isUser ? 0.18 : 0) - (home.isUser ? 0.12 : 0), 0.18, 3.4);
                     const homeGoals = sampleGoals(homeXg);
                     const awayGoals = sampleGoals(awayXg);
                     applyMatchResult(home, away, homeGoals, awayGoals);
@@ -439,6 +434,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             function renderLegendChoices(season) {
                 $('#new-team-btn').classList.remove('hidden');
+                const lineup = Object.entries(userLineup)
+                    .sort(([, first], [, second]) => (first.overall ?? 75) - (second.overall ?? 75))
+                    .map(([slotId, player]) => `<div class="legend-starter${(player.overall ?? 75) <= 75 ? ' weakest' : ''}"><span><b>${escapeHtml(player.name)}</b><small>${ROLE_SHORT[player.role] || player.role.toUpperCase()}</small></span><strong>${player.overall ?? 75}</strong></div>`)
+                    .join('');
                 const cards = LEGEND_REWARDS.map(legend => {
                     const compatible = Object.values(userLineup).some(player => getCompatibleSlotRoles([legend.role]).includes(player.role));
                     const owned = Object.values(userLineup).some(player => player.legendId === legend.id);
@@ -448,10 +447,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 openEuropeanModal({
                     kicker: 'CAMPIONE D’ITALIA · PREMIO SPECIALE',
                     title: 'SCEGLI LA TUA ICONA',
-                    copy: 'Scegli una leggenda e poi il titolare compatibile che lascerà il posto. L’icona entrerà nella tua rosa e giocherà le competizioni successive.',
+                    copy: 'Confronta le Icone con i tuoi titolari e scegli quale ruolo potenziare.',
                     actionLabel: 'SALTA IL PREMIO',
                     action: 'skip-legend',
-                    slots: cards
+                    slots: `<div class="legend-selection-layout"><div class="legend-starters"><div class="legend-panel-label">LA TUA FORMAZIONE · DAL PIÙ DEBOLE</div>${lineup}</div><div class="legend-options"><div class="legend-panel-label">SCEGLI L’ICONA</div>${cards}</div></div>`
                 });
                 pendingLegendSeason = season;
             }
@@ -698,8 +697,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         const away = competition.clubs[awayId];
                         const homeIsUser = home.isUser;
                         const awayIsUser = away.isUser;
-                        const homeXg = clamp(1.28 + (home.strength - away.strength) * 0.045 + (homeIsUser ? tactic.attack * 0.42 : 0) + (awayIsUser ? -tactic.defence * 0.3 : 0) + 0.12, 0.25, 3.4);
-                        const awayXg = clamp(1.08 + (away.strength - home.strength) * 0.04 + (awayIsUser ? tactic.attack * 0.42 : 0) + (homeIsUser ? -tactic.defence * 0.3 : 0), 0.2, 3.2);
+                        const homeXg = clamp(1.28 + (home.strength - away.strength) * 0.055 + (homeIsUser ? tactic.attack * 0.42 : 0) + (awayIsUser ? -tactic.defence * 0.3 : 0) + 0.12, 0.25, 3.4);
+                        const awayXg = clamp(1.08 + (away.strength - home.strength) * 0.052 + (awayIsUser ? tactic.attack * 0.42 : 0) + (homeIsUser ? -tactic.defence * 0.3 : 0), 0.2, 3.2);
                         const homeGoals = sampleGoals(homeXg);
                         const awayGoals = sampleGoals(awayXg);
                         home.played++; away.played++;
@@ -742,9 +741,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (competition.mode !== 'knockout' || !competition.knockoutOpponent) return;
                 const opponent = competition.knockoutOpponent;
                 const user = competition.clubs[0];
-                const userGoals = sampleGoals(clamp(1.35 + (user.strength - opponent.strength) * 0.045 + tactic.attack * 0.38 - tactic.defence * 0.12, 0.2, 3.6));
-                const rivalGoals = sampleGoals(clamp(1.2 + (opponent.strength - user.strength) * 0.04 - tactic.defence * 0.28, 0.2, 3.4));
-                const wonOnPens = userGoals === rivalGoals && Math.random() < clamp(0.5 + (user.strength - opponent.strength) / 150 + tactic.attack * 0.05, 0.2, 0.8);
+                const userGoals = sampleGoals(clamp(1.35 + (user.strength - opponent.strength) * 0.055 + tactic.attack * 0.38 - tactic.defence * 0.12, 0.2, 3.6));
+                const rivalGoals = sampleGoals(clamp(1.2 + (opponent.strength - user.strength) * 0.052 - tactic.defence * 0.28, 0.2, 3.4));
+                const wonOnPens = userGoals === rivalGoals && Math.random() < clamp(0.5 + (user.strength - opponent.strength) / 70 + tactic.attack * 0.05, 0.25, 0.75);
                 const won = userGoals > rivalGoals || (userGoals === rivalGoals && wonOnPens);
                 const playedStage = competition.knockoutStages[competition.knockoutIndex];
                 const score = `${userGoals} - ${rivalGoals}${userGoals === rivalGoals ? (won ? ' (5-4 rig.)' : ' (4-5 rig.)') : ''}`;
@@ -901,6 +900,7 @@ document.addEventListener('DOMContentLoaded', () => {
             $('#play-round-btn').addEventListener('click', playNextMatchday);
             $('#fast-sim-btn').addEventListener('click', simulateRemainingSeason);
             $('#play-btn').addEventListener('click', startSeasonSimulation);
+            $('#start-season-btn').addEventListener('click', startSeasonSimulation);
             $('#simul-close').addEventListener('click', () => {
                 $('#simul').classList.remove('active');
                 document.body.style.overflow = '';
@@ -920,6 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 ;
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const escapeDraftHtml = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 
         console.log('Script loaded');
 
@@ -1067,6 +1068,39 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
             return ratings.length === 1 ? ratings[0] : EA_OVERALLS.get(alias) ?? 75;
         }
 
+        const CLUB_OVR_OVERRIDES = {
+            Inter: 83,
+            Roma: 82,
+            Napoli: 82,
+            Juventus: 82,
+            Milan: 81,
+            Como: 80,
+            Atalanta: 80,
+            Lazio: 79,
+            Bologna: 78,
+            Cagliari: 78,
+            Fiorentina: 78,
+            Genoa: 77,
+            Lecce: 77,
+            Parma: 77,
+            Monza: 77,
+            Torino: 77,
+            Udinese: 77,
+            Venezia: 77,
+            Frosinone: 76,
+            Sassuolo: 76
+        };
+
+        function getClubOverall(clubIndex) {
+            const clubName = T[clubIndex]?.[0];
+            if (clubName && CLUB_OVR_OVERRIDES[clubName]) return CLUB_OVR_OVERRIDES[clubName];
+            const squad = CLUB_SQUADS[clubIndex];
+            if (!squad) return 75;
+            const starters = Object.values(squad.starters).flatMap(value => String(value).split('|'));
+            const ratings = starters.map(getPlayerOverall).filter(Number.isFinite);
+            return Math.round(ratings.reduce((sum, rating) => sum + rating, 0) / (ratings.length || 1));
+        }
+
         const ROLE_NAMES = {
             gk: 'Portiere',
             cb: 'Difensore',
@@ -1104,7 +1138,6 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
         let draftLegendOffer = false;
         let legendRevealSeenThisPick = false;
         const FORMATION_DRAFT_KEY = 'serieA_formationDraft_v1';
-
         function saveFormationDraft() {
             try {
                 if (!confirmedTeamName) {
@@ -1264,6 +1297,8 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
             $('#draft-club').textContent = 'SCEGLI UN MODULO';
             $('#play-btn').style.display = 'none';
             $('#play-btn').disabled = true;
+            $('#draft-summary').classList.add('hidden');
+            $('.formation-layout').classList.remove('hidden');
             $$('.mod-btn').forEach(button => {
                 button.disabled = true;
                 button.classList.remove('active');
@@ -1367,6 +1402,122 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
             $('#lineup-count').textContent = `${Object.keys(userLineup).length} / 11 GIOCATORI`;
         }
 
+        function draftMetrics() {
+            const players = Object.values(userLineup);
+            const average = roles => {
+                const selected = players.filter(player => roles.includes(player.role));
+                return Math.round(selected.reduce((total, player) => total + (player.overall ?? 75), 0) / (selected.length || 1));
+            };
+            return {
+                players,
+                overall: Math.round(players.reduce((total, player) => total + (player.overall ?? 75), 0) / (players.length || 1)),
+                attack: average(['lw', 'rw', 'st', 'cam']),
+                midfield: average(['cm', 'cam']),
+                defence: average(['gk', 'cb', 'lb', 'rb']),
+                best: players.slice().sort((a, b) => (b.overall ?? 75) - (a.overall ?? 75))[0]
+            };
+        }
+
+        function draftTeamCode() {
+            const words = userTeamName.trim().split(/\s+/).filter(Boolean);
+            const code = words.length > 1
+                ? `${words[0][0]}${words[1].slice(0, 2)}`
+                : (words[0] || '').slice(0, 3);
+            const cleanCode = code.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 3);
+            return cleanCode || 'FC';
+        }
+
+        function renderDraftSummaryPitch() {
+            const roleCounts = {};
+            $('#draft-summary-pitch').innerHTML = FORMATION_ROWS[currentFormation].map(row => `<div class="draft-summary-pitch-row">${row.map(role => {
+                const roleIndex = roleCounts[role] || 0;
+                roleCounts[role] = roleIndex + 1;
+                const player = userLineup[getRoleSlotId(role, roleIndex)];
+                return `<div class="draft-summary-player"><small>${ROLE_SHORT[role]}</small><b>${player ? escapeDraftHtml(player.name) : '—'}</b><em>${player ? player.overall ?? 75 : '--'}</em></div>`;
+            }).join('')}</div>`).join('');
+        }
+
+        function renderDraftSummary() {
+            const metrics = draftMetrics();
+            const best = metrics.best || { name: '--', overall: 75 };
+            $('#draft-summary-team').textContent = userTeamName.toUpperCase();
+            animateDraftValue('#draft-overall', metrics.overall);
+            animateDraftValue('#draft-attack', metrics.attack);
+            animateDraftValue('#draft-midfield', metrics.midfield);
+            animateDraftValue('#draft-defence', metrics.defence);
+            $('#draft-best-player').textContent = best.name;
+            $('#draft-best-rating').textContent = `${best.overall ?? 75} OVR`;
+            $('#draft-card-team').textContent = userTeamName.toUpperCase();
+            animateDraftValue('#draft-card-overall', metrics.overall);
+            animateDraftValue('#draft-card-attack', metrics.attack);
+            animateDraftValue('#draft-card-midfield', metrics.midfield);
+            animateDraftValue('#draft-card-defence', metrics.defence);
+            renderDraftSummaryPitch();
+            $('#draft-summary').classList.remove('hidden');
+            $('.formation-layout').classList.add('hidden');
+        }
+
+        function animateDraftValue(selector, target) {
+            const element = $(selector);
+            if (!element) return;
+            const end = Number(target) || 0;
+            const started = performance.now();
+            element.textContent = '0';
+            element.classList.remove('value-pop');
+            const tick = now => {
+                const progress = Math.min(1, (now - started) / 650);
+                element.textContent = Math.round(end * (1 - Math.pow(1 - progress, 3)));
+                if (progress < 1) requestAnimationFrame(tick);
+                else element.classList.add('value-pop');
+            };
+            requestAnimationFrame(tick);
+        }
+
+        function hideDraftSummary() {
+            $('#draft-summary').classList.add('hidden');
+            $('.formation-layout').classList.remove('hidden');
+        }
+
+        $('#edit-draft-btn').addEventListener('click', () => {
+            hideDraftSummary();
+            $('#pitch-builder').classList.add('editing');
+            $('#draft-club').textContent = 'CLICCA UN GIOCATORE PER SOSTITUIRLO';
+        });
+
+        $('#pitch-builder').addEventListener('click', event => {
+            if (!$('#pitch-builder').classList.contains('editing')) return;
+            const slot = event.target.closest('.pitch-slot.filled');
+            if (!slot) return;
+            const player = userLineup[slot.dataset.slot];
+            if (!player) return;
+            delete userLineup[slot.dataset.slot];
+            usedPlayers.delete(normalizePlayerName(player.name));
+            currentDraftPick = Object.keys(userLineup).length;
+            selectedTeam = null;
+            activeDraftPlayers = [];
+            $('#pitch-builder').classList.remove('editing');
+            renderFormation();
+            drawNextDraftTeam();
+        });
+
+        $('#copy-team-btn').addEventListener('click', async () => {
+            const metrics = draftMetrics();
+            const code = `${draftTeamCode()}-${metrics.overall}-${metrics.attack}-${metrics.midfield}-${metrics.defence}`;
+            try {
+                await navigator.clipboard.writeText(code);
+            } catch (error) {
+                const fallback = document.createElement('textarea');
+                fallback.value = code;
+                document.body.appendChild(fallback);
+                fallback.select();
+                document.execCommand('copy');
+                fallback.remove();
+            }
+            const button = $('#copy-team-btn');
+            button.textContent = `COPIATO · ${code}`;
+            window.setTimeout(() => { button.textContent = '📋 COPIA SQUADRA'; }, 2200);
+        });
+
         function openPlayerSelection() {
             const candidates = activeDraftPlayers.map(player => ({ ...player, availableRoles: getOpenRoles(player.roles) }));
             $('#modal-title').textContent = 'SCEGLI UN GIOCATORE';
@@ -1410,12 +1561,13 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
                 selectedTeam = null;
                 activeDraftPlayers = [];
                 draftLegendOffer = false;
-                $('#draft-club').textContent = 'PRONTO PER LA SIMULAZIONE';
+                $('#draft-club').textContent = 'DRAFT COMPLETATO';
                 $('#next-team-btn').disabled = true;
-                $('#play-btn').style.display = 'inline-block';
-                $('#play-btn').disabled = false;
+                $('#play-btn').style.display = 'none';
+                $('#play-btn').disabled = true;
                 closePlayerModal();
                 renderFormation();
+                renderDraftSummary();
                 saveFormationDraft();
                 return;
             }
@@ -1550,10 +1702,11 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
             const league = T.map((team, index) => ({
                 id: index,
                 name: team[0],
-                strength: team[5],
-                rating: 55 + team[5] * 4,
-                attack: team[5],
-                defence: team[5],
+                strength: toStrength(getClubOverall(index)),
+                rating: getClubOverall(index),
+                attack: toStrength(getClubOverall(index)),
+                midfield: toStrength(getClubOverall(index)),
+                defence: toStrength(getClubOverall(index)),
                 played: 0,
                 wins: 0,
                 draws: 0,
@@ -1601,13 +1754,13 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
             fixtures.forEach((roundFixtures, roundIndex) => roundFixtures.forEach(([homeId, awayId]) => {
                 const home = league.find(team => team.id === homeId);
                 const away = league.find(team => team.id === awayId);
-                const homeRatingEdge = (home.rating - away.rating) * 0.012;
-                const awayRatingEdge = (away.rating - home.rating) * 0.012;
+                const homeRatingEdge = Math.max(-0.8, Math.min(0.8, (home.rating - away.rating) * 0.03));
+                const awayRatingEdge = Math.max(-0.8, Math.min(0.8, (away.rating - home.rating) * 0.03));
                 const homeXg = Math.max(0.2, Math.min(3.5,
-                    1.3 + (home.attack - away.defence) * 0.15 + homeRatingEdge + 0.16
+                    1.3 + (home.attack - away.defence) * 0.18 + homeRatingEdge + 0.16
                     + (home.isUser ? 0.18 : 0) - (away.isUser ? 0.12 : 0)));
                 const awayXg = Math.max(0.2, Math.min(3.5,
-                    1.05 + (away.attack - home.defence) * 0.15 + awayRatingEdge
+                    1.05 + (away.attack - home.defence) * 0.18 + awayRatingEdge
                     + (away.isUser ? 0.18 : 0) - (home.isUser ? 0.12 : 0)));
                 const homeGoals = sampleGoals(homeXg);
                 const awayGoals = sampleGoals(awayXg);
